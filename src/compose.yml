@@ -1,0 +1,6 @@
+services:
+
+  fulfilment-processor:
+    image: courselabs/obsfun-fulfilment-processor
+    build:
+      context: ./fulfilment/Fulfilment.Processor
