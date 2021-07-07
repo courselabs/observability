@@ -1,0 +1,23 @@
+{ 
+    "query": 
+    { 
+        "bool":  
+        {
+            "must" : 
+            [
+                {
+                    "match": 
+                    {
+                        "message": "completed"
+                    }
+                },
+                {
+                    "match": 
+                    {
+                        "level": "INFO"
+                    }
+                }
+            ]
+        }
+    } 
+}

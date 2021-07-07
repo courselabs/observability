@@ -1,0 +1,12 @@
+services:
+
+  elasticsearch:
+    image: courselabs/elasticsearch:7.10
+    ports: 
+      - 9200:9200
+    networks:
+      - logging
+
+networks:
+  logging:
+    name: obsfun-logging

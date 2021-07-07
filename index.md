@@ -26,13 +26,13 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 ## Part 3 - Logging
 
 - [Writing logs]() 
-- [Running Elasticsearch]()
-- [Collecting logs with Logstash]()
+- [Running Elasticsearch](./labs/elasticsearch/README.md)
+- [Collecting logs with Logstash](./labs/logstash/README.md)
 
 ## Part 4 - Searching Logs
 
+- [Running Kibana](./labs/kibana/README.md)
 - [Querying with the search DSL]()
-- [Running Kibana]()
 - [Searching and visualizing]()
 
 ## Part 5 - Tracing
