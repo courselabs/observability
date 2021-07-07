@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31005.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fulfilment.Processor", "Fulfilment.Processor.csproj", "{AE05275B-E1AF-42B3-A9A7-BA6D83F522FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE05275B-E1AF-42B3-A9A7-BA6D83F522FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE05275B-E1AF-42B3-A9A7-BA6D83F522FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE05275B-E1AF-42B3-A9A7-BA6D83F522FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE05275B-E1AF-42B3-A9A7-BA6D83F522FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {69224B8A-0102-44B8-9F2E-AF87300F6104}
+	EndGlobalSection
+EndGlobal
