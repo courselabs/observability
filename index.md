@@ -1,0 +1,54 @@
+Welcome to the observability labs.
+
+These are hands-on resources to help you learn monitoring, logging and tracing.
+
+## Pre-reqs
+
+ - [Set up Docker and a Git client](setup/README.md) 
+ - Download your repo
+    - Open a terminal (PowerShell on Windows; any shell on Linux/macOS) 
+    - Run: `git clone https://github.com/courselabs/observability-fundamentals.git --depth 1`
+    - Open the folder: `cd observability-fundamentals`
+- _Optional_
+    -   Install [Visual Studio Code](https://code.visualstudio.com) (free - Windows, macOS and Linux) to browse the repo and documentation
+
+## Part 1 - Metrics
+
+- [Exporting metrics]()
+- [Running Prometheus]()
+
+## Part 2 - Dashboards
+
+- [Querying metrics]()
+- [Running Grafana]()
+- [Building Grafana dashboards]()
+
+## Part 3 - Logging
+
+- [Writing logs]() 
+- [Running Elasticsearch]()
+- [Collecting logs with Logstash]()
+
+## Part 4 - Searching Logs
+
+- [Querying with the search DSL]()
+- [Running Kibana]()
+- [Searching and visualizing]()
+
+## Part 5 - Tracing
+
+- [Distributed tracing]() 
+- [Running Jaeger]()
+- [Understanding spans]()
+
+## Part 6 - Real-world Observability
+
+- [Troubleshooting]()
+- [Hackathon!]() 
+
+
+### Credits
+
+Created by [@EltonStoneman](https://twitter.com/EltonStoneman) ([sixeyed](https://github.com/sixeyed)): Freelance Consultant and Trainer. Author of [Learn Docker in a Month of Lunches](https://www.manning.com/books/learn-docker-in-a-month-of-lunches), [Learn Kubernetes in a Month of Lunches](https://www.manning.com/books/learn-kubernetes-in-a-month-of-lunches) and [many Pluralsight courses](https://pluralsight.pxf.io/c/1197078/424552/7490?u=https%3A%2F%2Fwww.pluralsight.com%2Fauthors%2Felton-stoneman).
+
+
