@@ -25,15 +25,15 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 3 - Logging
 
-- [Writing logs]() 
+- [Writing logs]() # level; structured vs unstructured
 - [Running Elasticsearch](./labs/elasticsearch/README.md)
 - [Collecting logs with Logstash](./labs/logstash/README.md)
 
 ## Part 4 - Searching Logs
 
 - [Running Kibana](./labs/kibana/README.md)
-- [Querying with the search DSL]()
-- [Searching and visualizing]()
+- [Searching with the query DSL](./labs/query-dsl/README.md)
+- [Building Kibana dashboards]() # saved searches; visualizations; dasboards
 
 ## Part 5 - Tracing
 

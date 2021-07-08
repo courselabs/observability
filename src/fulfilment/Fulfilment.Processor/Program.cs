@@ -1,9 +1,11 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Fulfilment.Processor.Logging;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 using Serilog;
 using Serilog.Formatting.Json;
+using Serilog.Templates;
 using System;
 using System.Threading;
 
@@ -34,14 +36,17 @@ namespace Fulfilment.Processor
 
             if (_StructuredLogging)
             {
-                loggerConfig.WriteTo.File(new JsonFormatter(), "logs/fulfilment-processor.json", shared: true);
+                loggerConfig.WriteTo.File(
+                    new ExpressionTemplate("{ {Timestamp: @t, Entry: @m, Level: @l, Exception: @x, ..@p} }\n"),
+                    "logs/fulfilment-processor.json", 
+                    shared: true);
             }
             else
             {
                 loggerConfig.WriteTo.File("logs/fulfilment-processor.log", shared: true);
             }
 
-            var logger = loggerConfig.CreateLogger();
+            var logger = loggerConfig.Enrich.WithAppVersion().CreateLogger();
 
             // configure logging
             var services = new ServiceCollection();
@@ -129,7 +134,7 @@ namespace Fulfilment.Processor
         private struct ErrorMessage
         {
             public const string Unavailable = "Document service unavailable";
-            public const string Code302 = "Error code 302";
+            public const string Code302 = "Document service error code 302";
             public const string NoPaper = "Out of paper. Please load plain A4 into tray 1";
         }
     }

@@ -1,0 +1,8 @@
+services:
+
+  fulfilment-processor:
+    image: courselabs/obsfun-fulfilment-processor
+    environment:
+      - Observability__StructuredLogging=true
+    volumes:
+      - ./data:/app/logs

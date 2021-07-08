@@ -1,0 +1,5 @@
+- pipeline.id: fulfilment-log
+  path.config: "/pipelines/fulfilment-log-to-es.conf"
+
+- pipeline.id: fulfilment-json
+  path.config: "/pipelines/fulfilment-json-to-es.conf"
