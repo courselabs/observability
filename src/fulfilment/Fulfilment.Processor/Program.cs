@@ -4,7 +4,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prometheus;
 using Serilog;
-using Serilog.Formatting.Json;
 using Serilog.Templates;
 using System;
 using System.Threading;
@@ -13,6 +12,7 @@ namespace Fulfilment.Processor
 {
     class Program
     {
+        private static CancellationTokenSource _Cancellation = new CancellationTokenSource();
         private static readonly Random _Random = new Random();
 
         private static readonly Counter _ProcessedCounter = Metrics.CreateCounter("fulfilment_requests_total", "Fulfilment requests received", "status");
@@ -23,27 +23,49 @@ namespace Fulfilment.Processor
 
         static void Main(string[] args)
         {
+            Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
+            {
+                e.Cancel = true;
+                _Cancellation.Cancel();
+            };
+
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddJsonFile("appsettings.json")
                          .AddJsonFile("config/logging.json", optional: true, reloadOnChange: true)
                          .AddEnvironmentVariables();
 
             var config = configBuilder.Build();
-            _StructuredLogging = config.GetValue<bool>("Observability:StructuredLogging");
+            _StructuredLogging = config.GetValue<bool>("Observability:Logging:Structured");
+            var writeConsole = config.GetValue<bool>("Observability:Logging:Console");
+            var writeFile = config.GetValue<bool>("Observability:Logging:File");
 
             // configure Serilog
             var loggerConfig = new LoggerConfiguration().ReadFrom.Configuration(config);
-
             if (_StructuredLogging)
             {
-                loggerConfig.WriteTo.File(
-                    new ExpressionTemplate("{ {Timestamp: @t, Entry: @m, Level: @l, Exception: @x, ..@p} }\n"),
-                    "logs/fulfilment-processor.json", 
-                    shared: true);
+                var formatter = new ExpressionTemplate("{ {Timestamp: @t, Entry: @m, Level: @l, Exception: @x, ..@p} }\n");
+                if (writeFile)
+                {
+                    loggerConfig.WriteTo.File(
+                        formatter,
+                        "logs/fulfilment-processor.json",
+                        shared: true);
+                }
+                if (writeConsole)
+                {
+                    loggerConfig.WriteTo.Console(formatter);
+                }
             }
             else
             {
-                loggerConfig.WriteTo.File("logs/fulfilment-processor.log", shared: true);
+                if (writeFile)
+                {
+                    loggerConfig.WriteTo.File("logs/fulfilment-processor.log", shared: true);
+                }
+                if (writeConsole)
+                {
+                    loggerConfig.WriteTo.Console();
+                }
             }
 
             var logger = loggerConfig.Enrich.WithAppVersion().CreateLogger();
@@ -55,11 +77,13 @@ namespace Fulfilment.Processor
             var serviceProvider = services.BuildServiceProvider();
             _Log = serviceProvider.GetRequiredService<ILogger<Program>>();
 
-            var server = new MetricServer(port: 5000);
-            server.Start();
+            if (config.GetValue<bool>("Observability:Metrics:Enabled"))
+            {
+                var server = new MetricServer(port: 5000);
+                server.Start();
+            }
 
-            //TODO - cancel event, support ctrl-c
-            while(true)
+            while (!_Cancellation.Token.IsCancellationRequested)
             {
                 var processed = _Random.Next(0, 200);
                 var failed = _Random.Next(0, 15);
@@ -70,14 +94,14 @@ namespace Fulfilment.Processor
                 var inFlight = _Random.Next(0, 100);
                 _InProgressGauge.Set(inFlight);
 
-                Thread.Sleep(_Random.Next(1, 10)*1000);
+                _Cancellation.Token.WaitHandle.WaitOne(_Random.Next(1, 10) * 1000);
             }
         }
 
         private static void RecordProcessed(int processed, int failed)
         {
             _ProcessedCounter.WithLabels(nameof(processed)).Inc(processed);
-            for (int i = 0; i < processed-failed; i++)
+            for (int i = 0; i < processed - failed; i++)
             {
                 var requestId = _Random.Next(20000000, 40000000);
                 if (_StructuredLogging)

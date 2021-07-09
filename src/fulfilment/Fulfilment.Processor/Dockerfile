@@ -12,6 +12,6 @@ FROM mcr.microsoft.com/dotnet/runtime:3.1
 
 WORKDIR /app
 ENTRYPOINT ["dotnet", "Fulfilment.Processor.dll"]
-ENV Observability__StructuredLogging=false
+ENV Observability__Logging__Structured=false
 
 COPY --from=builder /out/ .
