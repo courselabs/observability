@@ -1,0 +1,12 @@
+﻿{
+  "Observability": {
+    "Logging": {
+      "File": true,
+      "Console": false,
+      "Structured": true
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": "Debug"
+  }
+}

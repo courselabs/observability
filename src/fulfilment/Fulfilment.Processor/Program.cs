@@ -31,8 +31,8 @@ namespace Fulfilment.Processor
 
             var configBuilder = new ConfigurationBuilder();
             configBuilder.AddJsonFile("appsettings.json")
-                         .AddJsonFile("config/logging.json", optional: true, reloadOnChange: true)
-                         .AddEnvironmentVariables();
+                         .AddEnvironmentVariables()                 
+                         .AddJsonFile("config/override.json", optional: true, reloadOnChange: true);
 
             var config = configBuilder.Build();
             _StructuredLogging = config.GetValue<bool>("Observability:Logging:Structured");
@@ -104,15 +104,18 @@ namespace Fulfilment.Processor
             for (int i = 0; i < processed - failed; i++)
             {
                 var requestId = _Random.Next(20000000, 40000000);
+                var duration = _Random.Next(2000, 12000);
                 if (_StructuredLogging)
                 {
                     _Log.LogTrace("{EventType}: Request ID: {RequestId}", EventType.Requested, requestId);
-                    _Log.LogDebug("{EventType}: Request ID: {RequestId}", EventType.Processed, requestId);
+                    _Log.LogDebug("{EventType}: Request ID: {RequestId}", EventType.InFlight, requestId);
+                    _Log.LogDebug("{EventType}: Request ID: {RequestId}. Took: {Duration}ms.", EventType.Processed, requestId, duration);
                 }
                 else
                 {
                     _Log.LogTrace($"Fulfilment requested. Request ID: {requestId}");
-                    _Log.LogDebug($"Fulfilment request processed. Request ID: {requestId}");
+                    _Log.LogDebug($"Fulfilment in-flight. Request ID: {requestId}");
+                    _Log.LogDebug($"Fulfilment request processed. Request ID: {requestId}. Took: {duration}ms.");
                 }
             }
         }
@@ -153,6 +156,7 @@ namespace Fulfilment.Processor
             public const string Processed = "Fulfilment.Processed";
             public const string Failed = "Fulfilment.Failed";
             public const string Requested = "Fulfilment.Requested";
+            public const string InFlight = "Fulfilment.InFlight";
         }
 
         private struct ErrorMessage

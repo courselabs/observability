@@ -1,4 +1,4 @@
-# Documents, Fields and Mappings
+# Searching with the query DSL
 
 ## Reference
 

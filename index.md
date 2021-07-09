@@ -25,7 +25,7 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 3 - Logging
 
-- [Writing logs]() # level; structured vs unstructured
+- [Writing logs](./labs/logging/README.md)
 - [Running Elasticsearch](./labs/elasticsearch/README.md)
 - [Collecting logs with Logstash](./labs/logstash/README.md)
 
