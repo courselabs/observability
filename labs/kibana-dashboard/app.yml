@@ -1,0 +1,13 @@
+services:
+
+  fulfilment-processor:
+    image: courselabs/obsfun-fulfilment-processor
+    volumes:
+      - ./config/override.json:/app/config/override.json
+      - ./data:/app/logs
+    networks: 
+      - fulfilment
+
+networks: 
+  web:
+  fulfilment:

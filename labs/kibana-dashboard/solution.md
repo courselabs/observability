@@ -1,22 +1,21 @@
 # Lab Solution
 
-GET /fulfilment-json/_search?pretty&size=1
-{ 
-    "query": 
-    {
-      "bool" : {
-        "must" : {
-          "match" : { "ErrorMessage": "unavailable" }
-        },
-      "filter": [
-        { "term" : { "LogLevel": "ERROR" }},
-        { "term" : { "SourceContext": "Fulfilment.Processor.Program" }},
-        { "term" : { "AppVersion": "1.0.0.0" }},
-        { "term" : { "EventType": "Fulfilment.Failed" }},
-        { "range": { "RequestId": { "gte": "30000000", "lte" : "32000000" }}}
-      ]
-    }
-  }
-}
+- stack mgmt
+- saved objects
+- filter on type=dashboard
+- check the dashboard
+- hit Export
 
-> Same number of hits as Kibana dashboard
+> [](./lab/dashboard.ndjson)
+
+Dev tools- delete index:
+
+```
+GET _cat/indices?v
+
+DELETE /.kibana_1
+```
+
+Create index pattern
+
+saved objects - import

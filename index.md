@@ -17,31 +17,31 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 - [Exporting metrics]()
 - [Running Prometheus]()
 
-## Part 2 - Dashboards
+## Part 2 - Building Health Dashboards
 
 - [Querying metrics]()
 - [Running Grafana]()
 - [Building Grafana dashboards]()
 
-## Part 3 - Logging
+## Part 3 - Centralized Log Collection
 
 - [Writing logs](./labs/logging/README.md)
 - [Running Elasticsearch](./labs/elasticsearch/README.md)
 - [Collecting logs with Logstash](./labs/logstash/README.md)
 
-## Part 4 - Searching Logs
+## Part 4 - Searching and Visualizing Logs
 
 - [Running Kibana](./labs/kibana/README.md)
 - [Searching with the query DSL](./labs/query-dsl/README.md)
 - [Building Kibana dashboards]() # saved searches; visualizations; dasboards
 
-## Part 5 - Tracing
+## Part 5 - Distributed Tracing
 
-- [Distributed tracing]() 
+- [Application traces]() 
 - [Running Jaeger]()
 - [Understanding spans]()
 
-## Part 6 - Real-world Observability
+## Part 6 - Real-World Observability
 
 - [Troubleshooting]()
 - [Hackathon!]() 

@@ -1,5 +1,2 @@
-- pipeline.id: apache
-  path.config: "/pipelines/apache-to-es.conf"
-
 - pipeline.id: fulfilment-json
   path.config: "/pipelines/fulfilment-json-to-es.conf"
