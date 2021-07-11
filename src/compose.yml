@@ -3,4 +3,14 @@ services:
   fulfilment-processor:
     image: courselabs/obsfun-fulfilment-processor
     build:
-      context: ./fulfilment/Fulfilment.Processor
+      context: ./fulfilment-processor
+
+  fulfilment-api:
+    image: courselabs/obsfun-fulfilment-api
+    build:
+      context: ./fulfilment-api
+
+  node-exporter:
+    image: courselabs/obsfun-node-exporter
+    build:
+      context: ./node-exporter
