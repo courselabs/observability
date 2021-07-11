@@ -37,3 +37,7 @@ docker run -d -p 8080:80 courselabs/obsfun-fulfilment-api
 http://localhost:8080/actuator/prometheus
 
 > JVM & Tomcat
+
+## Lab
+
+Explore other metric types - what is the histogram

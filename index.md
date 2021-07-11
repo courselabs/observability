@@ -14,7 +14,7 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 1 - Metrics
 
-- [Exporting metrics]()
+- [Exporting metrics](./labs/metrics/README.md)
 - [Running Prometheus]()
 
 ## Part 2 - Building Health Dashboards
