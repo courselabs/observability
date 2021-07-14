@@ -36,7 +36,7 @@ docker run -d -p 8080:80 courselabs/obsfun-fulfilment-api
 
 http://localhost:8080/actuator/prometheus
 
-> JVM & Tomcat
+> JVM & Tomcat https://docs.spring.io/spring-boot/docs/current/reference/html/actuator.html#actuator.metrics.supported
 
 Try:
 

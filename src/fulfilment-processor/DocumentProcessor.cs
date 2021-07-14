@@ -13,7 +13,14 @@ namespace Fulfilment.Processor
 
         private static readonly Counter _ProcessedCounter = Metrics.CreateCounter("fulfilment_requests_total", "Fulfilment requests received", "status");
         private static readonly Gauge _InProgressGauge = Metrics.CreateGauge("fulfilment_in_flight_total", "Fulfilment requests in progress");
+        private static readonly Histogram  _ProcessDurationHistogram = Metrics.CreateHistogram("fulfilment_processing_seconds", "Fulfilment processing duration",
+            new HistogramConfiguration
+            {
+                // 2s buckets, from 0s to 14s
+                Buckets = Histogram.LinearBuckets(start: 0, width: 2, count: 7)
+            }); 
         
+
         private readonly ObservabilityOptions _options;
         private readonly ILogger _logger;
 
@@ -50,6 +57,7 @@ namespace Fulfilment.Processor
             {
                 var requestId = _Random.Next(20000000, 40000000);
                 var duration = _Random.Next(2000, 12000);
+                _ProcessDurationHistogram.Observe(duration/1000);
                 if (_options.Logging.Structured)
                 {
                     _logger.LogTrace("{EventType}: Request ID: {RequestId}", EventType.Requested, requestId);
