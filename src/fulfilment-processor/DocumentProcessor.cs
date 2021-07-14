@@ -27,17 +27,20 @@ namespace Fulfilment.Processor
         {
             while (!cancellation.Token.IsCancellationRequested)
             {
-                var processed = _Random.Next(0, 200);
-                var failed = _Random.Next(0, 15);
-
-                RecordProcessed(processed, failed);
-                RecordFailed(processed, failed);
-
-                var inFlight = _Random.Next(0, 100);
+                var inFlight = GenerateMetric(0, 200);
                 _InProgressGauge.Set(inFlight);
+
+                var failed = _Random.Next(0, (int) Math.Round(inFlight * _options.Metrics.FailureFactor));
+                RecordProcessed(inFlight, failed);
+                RecordFailed(inFlight, failed);               
 
                 cancellation.Token.WaitHandle.WaitOne(_Random.Next(1, 10) * 1000);
             }
+        }
+
+        private int GenerateMetric(int from, int to)
+        {
+            return (int) Math.Round(_Random.Next(from, to) * _options.Metrics.Factor);
         }
 
         private void RecordProcessed(int processed, int failed)

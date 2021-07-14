@@ -38,6 +38,16 @@ http://localhost:8080/actuator/prometheus
 
 > JVM & Tomcat
 
+Try:
+
+http://localhost:8080/ 
+http://localhost:8080/notfound
+
+Refresh metrics - 
+
+http_server_requests_seconds_count
+http_server_requests_seconds_sum
+
 ## Lab
 
 Explore other metric types - what is the histogram

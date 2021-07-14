@@ -1,0 +1,43 @@
+services:
+
+  prometheus:
+    image: courselabs/prometheus:v2.28.1
+    ports: 
+      - 9090:9090
+    volumes:
+      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml
+    networks:
+      - metrics
+
+  fulfilment-processor-1:
+    image: courselabs/obsfun-fulfilment-processor
+    environment:
+      - Observability__Metrics__IncludeRuntime=true
+    networks: 
+      - fulfilment
+      - metrics
+
+  fulfilment-processor-2:
+    image: courselabs/obsfun-fulfilment-processor
+    environment:
+      - Observability__Metrics__IncludeRuntime=true
+      - Observability__Metrics__Factor=3
+    networks: 
+      - fulfilment
+      - metrics
+
+  fulfilment-processor-3:
+    image: courselabs/obsfun-fulfilment-processor
+    environment:
+      - Observability__Metrics__IncludeRuntime=true
+      - Observability__Metrics__Factor=0.5
+      - Observability__Metrics__FailureFactor=0.3
+      - Observability__Metrics__AppVersion=1.5.2
+    networks: 
+      - fulfilment
+      - metrics
+
+networks: 
+  fulfilment:
+  metrics:
+    name: obsfun-metrics

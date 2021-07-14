@@ -47,7 +47,7 @@ namespace Fulfilment.Processor
             if (options.Metrics.Enabled)
             {
                 var infoGauge = Metrics.CreateGauge("app_info", "Application info", "dotnet_version", "assembly_name", "app_version");
-                infoGauge.Labels("3.1.16", "Fulfilment.Processor", "1.3.1").Set(1);
+                infoGauge.Labels("3.1.16", "Fulfilment.Processor", options.Metrics.AppVersion).Set(1);
                 if (!options.Metrics.IncludeRuntime)
                 {
                     Metrics.SuppressDefaultMetrics();

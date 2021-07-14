@@ -2,16 +2,19 @@
 ## Run Prometheus
 
 - config/prometheus.yml
+- compose.yml
 
-docker-compose -f labs/prometheus/prometheus.yml up -d
+docker-compose -f labs/promql/compose.yml up -d
 
 http://localhost:9090
+
+_Status...Configuration_
 
 _Status...Targets_
 
 Run apps:
 
-docker-compose -f labs/prometheus/apps.yml up -d
+docker-compose -f labs/promql/apps.yml up -d
 
 > Status, endpoints come online
 
