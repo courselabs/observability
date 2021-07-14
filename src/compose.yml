@@ -5,6 +5,11 @@ services:
     build:
       context: ./fulfilment-processor
 
+  fulfilment-web:
+    image: courselabs/obsfun-fulfilment-web
+    build:
+      context: ./fulfilment-web
+
   fulfilment-api:
     image: courselabs/obsfun-fulfilment-api
     build:
