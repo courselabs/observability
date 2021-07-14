@@ -6,8 +6,3 @@ scrape_configs:
   - job_name: 'fulfilment-processor'
     static_configs:
       - targets: ['fulfilment-processor-1:9110','fulfilment-processor-2:9110','fulfilment-processor-3:9110']
-      
-#  - job_name: 'fulfilment-api'
-#    metrics_path: /actuator/prometheus
-#    static_configs:
-#      - targets: ['fulfilment-api']

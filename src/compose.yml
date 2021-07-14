@@ -19,3 +19,8 @@ services:
     image: courselabs/prometheus:v2.28.1
     build:
       context: ./prometheus
+
+  grafana:
+    image: courselabs/grafana:8.0.5
+    build:
+      context: ./grafana

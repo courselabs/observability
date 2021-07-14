@@ -9,6 +9,7 @@ using Serilog;
 using Serilog.Templates;
 using System;
 using System.Threading;
+using Timers = System.Timers;
 
 namespace Fulfilment.Processor
 {
@@ -43,6 +44,22 @@ namespace Fulfilment.Processor
             var logger = CreateLogger(config, options.Logging);
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger));
             serviceProvider = services.BuildServiceProvider();
+
+            if (options.ExitAfterSeconds > 0)
+            {
+                var expiration = TimeSpan.FromSeconds(options.ExitAfterSeconds);
+                var exitTimer = new Timers.Timer(expiration.TotalMilliseconds)
+                {
+                    AutoReset = false,
+                    Enabled = true
+                };
+                exitTimer.Elapsed += (s, args) => _Cancellation.Cancel();
+            }
+
+            if (options.StartupDelaySeconds > 0)
+            {
+                _Cancellation.Token.WaitHandle.WaitOne(options.StartupDelaySeconds * 1000);
+            }
 
             if (options.Metrics.Enabled)
             {
