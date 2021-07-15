@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Fulfilment.Web.Pages
@@ -30,10 +31,13 @@ namespace Fulfilment.Web.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            var userId = "0421";
             try
-            {                
-                Documents = await _documentsService.GetDocuments("0421");
-                CallFailed = false;
+            {
+                _logger.LogDebug("Loading documents for user ID: {UserId}", userId);
+                Documents = await _documentsService.GetDocuments(userId);
+                CallFailed = false; 
+                _logger.LogDebug("Loaded documents: {DocumentCount}; user ID: {UserId}", Documents.Count(), userId);
             }
             catch (Exception ex)
             {

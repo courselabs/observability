@@ -3,6 +3,9 @@ package widgetario.products;
 import io.micrometer.core.annotation.Timed;
 import io.micrometer.core.instrument.MeterRegistry;
 
+import io.opentracing.Span;
+import io.opentracing.util.GlobalTracer;
+
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.util.Arrays;
@@ -30,6 +33,14 @@ public class DocumentsController {
     @Timed()
     public List<Document> get() {
         log.debug("** GET /documents called");
+        
+        // TODO-NEXT - baggage not propagating - w3c proto?
+        Span span = GlobalTracer.get().activeSpan();
+        if (span != null){
+            String userId = span.getBaggageItem("userId");
+            log.debug("** Got userId from span: " + userId);
+        }
+
         List<Document> documents = new ArrayList<>();
         documents.add(new Document(12345, "contract.pdf", 4598798, 1));
         documents.add(new Document(234435, "timetable.docx", 2342134, 1));

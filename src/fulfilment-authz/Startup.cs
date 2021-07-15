@@ -8,8 +8,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using Serilog;
+using Serilog.Templates;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,6 +34,13 @@ namespace Fulfilment.Authorization
         {
             services.AddHttpClient();
             services.AddControllers();
+
+            // configure Serilog
+            var logger = CreateLogger(Configuration);
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger));
+
+            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.ForceDefaultIdFormat = true;
 
             services.AddOpenTelemetryTracing(builder =>
             {
@@ -61,6 +71,19 @@ namespace Fulfilment.Authorization
             {
                 endpoints.MapControllers();
             });
+        }        
+
+        private static Serilog.Core.Logger CreateLogger(IConfiguration config)
+        {
+            var loggerConfig = new LoggerConfiguration().ReadFrom.Configuration(config);
+            var formatter = new ExpressionTemplate("{ {Timestamp: @t, Entry: @m, Level: @l, Exception: @x, ..@p} }\n");
+
+            loggerConfig.WriteTo.File(
+                    formatter,
+                    "logs/fulfilment-authz.json",
+                    shared: true);
+
+            return loggerConfig.CreateLogger();
         }
     }
 }

@@ -16,6 +16,7 @@ ENTRYPOINT ["dotnet", "Fulfilment.Web.dll"]
 
 ENV Observability__Trace__Console=true \ 
     Observability__Trace__Jaeger=false \
+    Observability__Trace__CustomSpans=false \
     Documents__Api__Url=http://fulfilment-api/documents \
     Documents__Authz__Url=http://fulfilment-authz/check
 
