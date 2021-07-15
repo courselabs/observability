@@ -19,9 +19,9 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 2 - Building Health Dashboards
 
-- [Querying metrics]()
-- [Running Grafana]()
-- [Building Grafana dashboards]()
+- [Querying metrics](./labs/promql/README.md)
+- [Running Grafana](./labs/grafana/README.md)
+- [Building Grafana dashboards](./labs/grafana-dashboard/README.md)
 
 ## Part 3 - Centralized Log Collection
 
@@ -37,9 +37,9 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 5 - Distributed Tracing
 
-- [Application traces]() 
-- [Running Jaeger]()
-- [Understanding spans]()
+- [Application traces](./labs/tracing/README.md) 
+- [Running Jaeger](./labs/jaeger/README.md)
+- [Custom spans and baggage]()
 
 ## Part 6 - Real-World Observability
 

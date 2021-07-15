@@ -32,7 +32,7 @@ namespace Fulfilment.Web.Pages
         {
             try
             {                
-                Documents = await _documentsService.GetDocuments();
+                Documents = await _documentsService.GetDocuments("0421");
                 CallFailed = false;
             }
             catch (Exception ex)

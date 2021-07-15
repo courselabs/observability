@@ -15,6 +15,11 @@ services:
     build:
       context: ./fulfilment-api
 
+  fulfilment-authz:
+    image: courselabs/obsfun-fulfilment-authz
+    build:
+      context: ./fulfilment-authz
+
   node-exporter:
     image: courselabs/obsfun-node-exporter
     build:

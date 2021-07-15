@@ -25,6 +25,8 @@ Activity.TagObjects:
     otel.status_code: UNSET
 ```
 
+> [Trace Context](https://www.w3.org/TR/trace-context/) - standard propagation format
+
 docker run -d -p 8071:80 -e OTEL_TRACES_EXPORTER=logging --name api courselabs/obsfun-fulfilment-api
 
 docker logs -f api

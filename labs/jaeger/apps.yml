@@ -1,5 +1,26 @@
 services:
 
+  fulfilment-api:
+    image: courselabs/obsfun-fulfilment-api
+    ports:
+      - "8071:80"
+    environment:
+      - OTEL_TRACES_EXPORTER=jaeger
+    networks:
+      - tracing 
+      - fulfilment 
+
+  fulfilment-authz:
+    image: courselabs/obsfun-fulfilment-authz
+    ports:
+      - "8072:80"
+    environment:
+      - Observability__Trace__Console=false
+      - Observability__Trace__Jaeger=true
+    networks:
+      - tracing 
+      - fulfilment 
+
   fulfilment-web:
     image: courselabs/obsfun-fulfilment-web
     ports:
@@ -9,16 +30,7 @@ services:
       - Observability__Trace__Jaeger=true
     depends_on:
       - fulfilment-api
-    networks:
-      - tracing 
-      - fulfilment 
-
-  fulfilment-api:
-    image: courselabs/obsfun-fulfilment-api
-    ports:
-      - "8071:80"
-    environment:
-      - OTEL_TRACES_EXPORTER=jaeger
+      - fulfilment-authz
     networks:
       - tracing 
       - fulfilment 
