@@ -7,6 +7,8 @@ namespace Fulfilment.Web.Configuration
         public bool Console { get; set; } = true;
 
         public bool Jaeger { get; set; } = false;
+
+        public AgentOptions Agent { get; set; } = new AgentOptions();
     }
 }
  

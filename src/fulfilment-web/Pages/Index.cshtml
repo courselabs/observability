@@ -4,7 +4,47 @@
     ViewData["Title"] = "Home page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+
+<h1>Document Adminstration</h1>
+
+@if (Model.CallFailed)
+{
+    <p>Documents service unavailable!</p>
+}
+else if (Model.Documents != null && Model.Documents.Any())
+{
+    <h1>Documents</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Filename</th>
+                <th>Size</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in @Model.Documents)
+            {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.FileName</td>
+                <td>@product.Size</td>
+                <td>@product.FulfilmentStatus</td>
+            </tr>
+            }
+        </tbody>
+    </table>
+}
+else if (Model.Documents != null)
+{
+    <p>No Documents found</p>
+}
+else
+{
+    <form method="post">
+        <p>Load document list</p>
+        <input type="submit" value="Go!" />
+    </form>
+}

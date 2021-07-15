@@ -31,8 +31,9 @@ public class DocumentsController {
     public List<Document> get() {
         log.debug("** GET /documents called");
         List<Document> documents = new ArrayList<>();
-        documents.add(new Document(12345, "contract.pdf", 4598798, 0));
-        documents.add(new Document(234435, "timetable.docx", 2342134, 0));
+        documents.add(new Document(12345, "contract.pdf", 4598798, 1));
+        documents.add(new Document(234435, "timetable.docx", 2342134, 1));
+        documents.add(new Document(141242, "obsfun.pptx", 900194123, 2));
         return documents;
     }
 }
