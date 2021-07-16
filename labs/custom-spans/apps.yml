@@ -6,6 +6,7 @@ services:
       - "8071:80"
     environment:
       - OTEL_TRACES_EXPORTER=jaeger
+      - TRACE_CUSTOM_SPANS=true
     networks:
       - tracing 
       - fulfilment 

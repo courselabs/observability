@@ -1,4 +1,4 @@
-package widgetario.products;
+package fulfilment.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -12,7 +12,7 @@ public class Application {
    
     @RequestMapping("/")
     public String home() {
-        return "Nothing to see here, try /products";
+        return "Nothing to see here, try /documents";
     }
 
     public static void main(String[] args) {

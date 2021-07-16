@@ -1,4 +1,4 @@
-package widgetario.products;
+package fulfilment.api;
 
 import java.io.Serializable;
 

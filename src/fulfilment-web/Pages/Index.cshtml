@@ -1,11 +1,17 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "List Documents";
 }
 
-
-<h1>Document Adminstration</h1>
+@if (string.IsNullOrEmpty(Model.UserId))
+{
+    <h1>List Documents for User</h1>
+}
+else
+{
+    <h1>Documents for User: @Model.UserId</h1>
+}
 
 @if (Model.CallFailed)
 {
@@ -13,8 +19,6 @@
 }
 else if (Model.Documents != null && Model.Documents.Any())
 {
-    <h1>Documents</h1>
-
     <table class="table">
         <thead>
             <tr>
@@ -27,12 +31,12 @@ else if (Model.Documents != null && Model.Documents.Any())
         <tbody>
             @foreach (var product in @Model.Documents)
             {
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.FileName</td>
-                <td>@product.Size</td>
-                <td>@product.FulfilmentStatus</td>
-            </tr>
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.FileName</td>
+                    <td>@product.Size</td>
+                    <td>@product.FulfilmentStatus</td>
+                </tr>
             }
         </tbody>
     </table>
@@ -44,7 +48,7 @@ else if (Model.Documents != null)
 else
 {
     <form method="post">
-        <p>Load document list</p>
+        <input type="text" name="userId" value="0421">
         <input type="submit" value="Go!" />
     </form>
 }

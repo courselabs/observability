@@ -40,13 +40,33 @@ http://localhost:8080/actuator/prometheus
 
 Try:
 
-http://localhost:8080/ 
+http://localhost:8080/documents 
 http://localhost:8080/notfound
 
 Refresh metrics - 
 
 http_server_requests_seconds_count
 http_server_requests_seconds_sum
+
+```
+# HELP method_timed_seconds  
+# TYPE method_timed_seconds summary
+method_timed_seconds_count{class="fulfilment.api.DocumentsController",exception="none",method="get",} 12.0
+method_timed_seconds_sum{class="fulfilment.api.DocumentsController",exception="none",method="get",} 0.0241029
+# HELP method_timed_seconds_max  
+# TYPE method_timed_seconds_max gauge
+method_timed_seconds_max{class="fulfilment.api.DocumentsController",exception="none",method="get",} 0.0119739
+```
+
+```
+# HELP logback_events_total Number of error level events that made it to the logs
+# TYPE logback_events_total counter
+logback_events_total{level="warn",} 0.0
+logback_events_total{level="debug",} 12.0
+logback_events_total{level="error",} 0.0
+logback_events_total{level="trace",} 0.0
+logback_events_total{level="info",} 31.0
+```
 
 ## Lab
 

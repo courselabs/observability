@@ -29,8 +29,9 @@ namespace Fulfilment.Authorization.Controllers
         {
             if (Activity.Current != null)
             {
-                var source = Activity.Current.GetBaggageItem("source");
-                _logger.LogDebug("In span from source: {AuthCheckSource}", source);
+                _logger.LogDebug("Auth check request ID: {RequestId}, from source: {AuthCheckSource}", 
+                    Activity.Current.GetBaggageItem("request-id"),
+                    Activity.Current.GetBaggageItem("request-source"));
             }
 
             //not a real idp call - just used to create another span in the trace:

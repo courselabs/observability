@@ -47,7 +47,10 @@ namespace Fulfilment.Web.Services
                 if (_options.Trace.CustomSpans)
                 {
                     authzSpan = _activitySource.StartActivity("authz-check");
-                    authzSpan.AddBaggage("source", "fulfilment-web");
+                    authzSpan.AddTag("span.kind", "internal")
+                             .AddTag("user.id", userId)                                               
+                             .AddTag("action.id", $"{DocumentAction.List}")
+                             .AddBaggage("request.source", "fulfilment-web");
                 }
 
                 try
@@ -64,6 +67,7 @@ namespace Fulfilment.Web.Services
                 {
                     if (authzSpan != null)
                     {
+                        authzSpan.AddTag("authz.allowed", $"{authzResult.IsAllowed}");
                         authzSpan.Dispose();
                     }
                 }
@@ -78,7 +82,8 @@ namespace Fulfilment.Web.Services
             if (_options.Trace.CustomSpans)
             {
                 loadSpan = _activitySource.StartActivity("document-load");
-                loadSpan.AddBaggage("userId", userId);
+                loadSpan.AddTag("span.kind", "internal")
+                        .AddBaggage("user.id", userId);
             }
 
             try

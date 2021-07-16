@@ -1,4 +1,4 @@
-package widgetario.products;
+package fulfilment.api;
 
 import io.micrometer.core.instrument.MeterRegistry;
 import io.micrometer.core.instrument.Tags;
