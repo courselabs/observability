@@ -1,0 +1,34 @@
+services:
+
+  fulfilment-authz:
+    image: courselabs/obsfun-fulfilment-authz
+    ports:
+      - "8072:80"
+    environment:
+      - Observability__Trace__Console=false
+      - Observability__Trace__Jaeger=true
+      - Observability__Trace__Baggage__Tag=true
+    networks:
+      - tracing 
+      - fulfilment 
+
+  fulfilment-web:
+    image: courselabs/obsfun-fulfilment-web
+    ports:
+      - "8070:80"
+    environment:
+      - Observability__Trace__Console=false
+      - Observability__Trace__Jaeger=true
+      - Documents__Authz__Url=http://fulfilment-authz/check
+      - Observability__Trace__CustomSpans=true
+      - Observability__Trace__Baggage__Tag=true
+    depends_on:
+      - fulfilment-authz
+    networks:
+      - tracing 
+      - fulfilment 
+
+networks:
+  fulfilment:
+  tracing:
+    name: obsfun-tracing

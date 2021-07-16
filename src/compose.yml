@@ -8,7 +8,8 @@ services:
   fulfilment-web:
     image: courselabs/obsfun-fulfilment-web
     build:
-      context: ./fulfilment-web
+      context: ./fulfilment-frontend
+      dockerfile: fulfilment-web/Dockerfile
 
   fulfilment-api:
     image: courselabs/obsfun-fulfilment-api
@@ -18,7 +19,8 @@ services:
   fulfilment-authz:
     image: courselabs/obsfun-fulfilment-authz
     build:
-      context: ./fulfilment-authz
+      context: ./fulfilment-frontend
+      dockerfile: fulfilment-authz/Dockerfile
 
   node-exporter:
     image: courselabs/obsfun-node-exporter
