@@ -1,4 +1,5 @@
 ﻿using Fulfilment.Core.Configuration;
+using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Models;
 using Fulfilment.Web.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -35,6 +36,7 @@ namespace Fulfilment.Web.Pages
 
         public async Task<IActionResult> OnGet()
         {
+            Baggage.AddFromIncoming(Request.Headers);
             if (Request.Query.ContainsKey("all"))
             {
                 await LoadDocuments(all: true);
@@ -49,6 +51,7 @@ namespace Fulfilment.Web.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            Baggage.AddFromIncoming(Request.Headers);
             await LoadDocuments();
             return Page();
         }

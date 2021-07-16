@@ -5,3 +5,5 @@ curl -H "traceparent: 00-0af7651916cd43dd8448eb211c80319c-b7ad6b7169203331-01" -
 
 
 curl -H "baggage: custom.key=123" localhost:8070/index?userId=1024
+
+curl -H "baggage: authz.skip=true" localhost:8070/index?userId=1024

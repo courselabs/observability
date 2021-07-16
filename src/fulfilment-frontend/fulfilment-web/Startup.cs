@@ -1,5 +1,6 @@
 using Fulfilment.Core.Configuration;
 using Fulfilment.Core.Services;
+using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,7 +32,7 @@ namespace Fulfilment.Web
                             .ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
                     });
 
-            services.AddHttpClient("client");
+            services.AddHttpClient();
 
             services.AddSingleton(_options);
             services.AddTransient<AuthorizationService>();
@@ -40,7 +41,6 @@ namespace Fulfilment.Web
 
             services.AddLogging(Configuration, _options.Trace);
             services.AddTracing(_options.Trace);
-            services.AddBaggageHeaderPropagation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -56,7 +56,6 @@ namespace Fulfilment.Web
 
             app.UseStaticFiles();
             app.UseRouting();
-            app.UseHeaderPropagation();
 
             app.UseEndpoints(endpoints =>
             {

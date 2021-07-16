@@ -11,6 +11,7 @@ import java.math.MathContext;
 import java.util.Arrays;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -18,10 +19,7 @@ import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
 
 @RestController
@@ -37,7 +35,10 @@ public class DocumentsController {
     private io.opentracing.Tracer tracer; 
     
     @Value("${trace.custom.spans}")
-    private boolean customSpans;  
+    private boolean customSpans;
+
+    @Value("${trace.baggage.tag}")
+    private boolean tagBaggage;  
 
     public DocumentsController() {
         if (documents.size() == 0) {
@@ -48,17 +49,46 @@ public class DocumentsController {
         }
     }
 
+    private void addBaggageItem(Span span, String keyValuePair) {
+        if (keyValuePair.contains("=")) {
+            String[] parts = keyValuePair.split("=");
+            span.setBaggageItem(parts[0].trim(), parts[1].trim());
+        }
+    }
+
+     private void tagBaggageItems(Span span, SpanContext ctx) {
+         for (Map.Entry<String, String> baggageItem : ctx.baggageItems()) {
+             span.setTag(baggageItem.getKey(), baggageItem.getValue());
+         }
+     }
+
     @RequestMapping("/documents")
     @Timed()
-    public List<Document> get() {      
+    public List<Document> get(@RequestHeader(name = "baggage", required = false) String baggageHeader) {      
         Span span = tracer.activeSpan();
         if (span != null){
-            log.debug("** GET /documents called in trace id: " + span.context().toTraceId());
+            SpanContext ctx = span.context();
+            log.debug("** GET /documents called in trace id: " + ctx.toTraceId() + ", with baggage: " + baggageHeader);
+
+            if (baggageHeader != null && baggageHeader.contains(",")) {
+                for(String value : baggageHeader.split(",")) {
+                    addBaggageItem(span, value);
+                }   
+            }
+            else if (baggageHeader != null) {
+                addBaggageItem(span, baggageHeader);
+            }
+
+            if (tagBaggage) {
+                tagBaggageItems(span, ctx);
+            }
+
+            String userId = span.getBaggageItem("user.id");
+            log.debug("** Got userId from span: " + userId);
         }
         else{
             log.debug("** GET /documents called");
         }
-
 
         Span dbLoadSpan = null;
         if (customSpans) {

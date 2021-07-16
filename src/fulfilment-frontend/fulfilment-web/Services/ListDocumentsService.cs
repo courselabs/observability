@@ -1,4 +1,5 @@
 ﻿using Fulfilment.Core.Configuration;
+using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Model;
 using Fulfilment.Web.Models;
 using Microsoft.Extensions.Configuration;
@@ -57,6 +58,10 @@ namespace Fulfilment.Web.Services
             try
             {
                 var client = _clientFactory.CreateClient("client");
+                if (_options.Trace.Baggage.Tag)
+                {
+                    Baggage.AddToOutgoing(client.DefaultRequestHeaders);
+                }
                 var response = await client.GetAsync(ApiUrl);
                 if (!response.IsSuccessStatusCode)
                 {

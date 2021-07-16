@@ -1,4 +1,5 @@
 ﻿using Fulfilment.Core.Configuration;
+using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
@@ -56,7 +57,7 @@ namespace Fulfilment.Web.Services
 
             try
             {
-                var client = _clientFactory.CreateClient("client");
+                var client = _clientFactory.CreateClient();
                 var authzResponse = await client.GetAsync($"{_authzUrl}/{userId}/{action}");
                 if (!authzResponse.IsSuccessStatusCode)
                 {

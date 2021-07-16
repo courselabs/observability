@@ -26,13 +26,11 @@ namespace Fulfilment.Authorization
 
             services.AddLogging(Configuration, _options.Trace);
             services.AddTracing(_options.Trace);
-            services.AddBaggageHeaderPropagation();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
-            app.UseHeaderPropagation();
 
             app.UseEndpoints(endpoints =>
             {

@@ -48,3 +48,5 @@ docker-compose -f labs/custom-spans/update.yml up -d
 list docs for 04 user
 
 search trace - web & authz spans have transaction.id tag - this has been set in web as baggage, and copied to tags
+
+api doesn't copy baggage to tags - but can see in logs for span
