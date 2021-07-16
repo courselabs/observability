@@ -14,10 +14,10 @@ EXPOSE 80
 WORKDIR /app
 ENTRYPOINT ["dotnet", "Fulfilment.Web.dll"]
 
-ENV Observability__Trace__Console=true \ 
-    Observability__Trace__Jaeger=false \
-    Observability__Trace__CustomSpans=false \
-    Documents__Api__Url=http://fulfilment-api/documents \
-    Documents__Authz__Url=http://fulfilment-authz/check
+ENV Observability__Trace__Console="true" \ 
+    Observability__Trace__Jaeger="false" \
+    Observability__Trace__CustomSpans="false" \
+    Documents__Api__BaseUrl="http://fulfilment-api" \
+    Documents__Authz__Url=""
 
 COPY --from=builder /out/ .

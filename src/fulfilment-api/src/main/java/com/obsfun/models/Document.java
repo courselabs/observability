@@ -3,19 +3,20 @@ package fulfilment.api;
 import java.io.Serializable;
 
 public class Document implements Serializable {
-
     private long id;
     private String fileName;
     private long size;
-    private int fulfilmentStatus;
+    private int fulfilmentStatus;    
+    private String submittedByUserId;
 
     public Document() {}
 
-    public Document(long id, String fileName, long size, int fulfilmentStatus) {
+    public Document(long id, String fileName, long size, int fulfilmentStatus, String submittedByUserId) {
         setId(id);
         setFileName(fileName);
         setSize(size);
         setFulfilmentStatus(fulfilmentStatus);
+        setSubmittedByUserId(submittedByUserId);
     }
 
     public long getId() {
@@ -48,5 +49,13 @@ public class Document implements Serializable {
     
     public void setFulfilmentStatus(int fulfilmentStatus) {
         this.fulfilmentStatus = fulfilmentStatus;
+    }
+
+    public String getSubmittedByUserId() {
+    	return submittedByUserId;
+    }
+    
+    public void setSubmittedByUserId(String submittedByUserId) {
+        this.submittedByUserId = submittedByUserId;
     }
 }

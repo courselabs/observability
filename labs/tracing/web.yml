@@ -1,0 +1,11 @@
+services:
+
+  fulfilment-web:
+    image: courselabs/obsfun-fulfilment-web
+    ports:
+      - "8070:80"
+    networks:
+      - fulfilment 
+
+networks:
+  fulfilment:

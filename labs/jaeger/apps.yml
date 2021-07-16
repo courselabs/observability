@@ -5,7 +5,7 @@ services:
     ports:
       - "8071:80"
     environment:
-      - OTEL_TRACES_EXPORTER=jaeger
+      - OPENTRACING_JAEGER_ENABLED=true
     networks:
       - tracing 
       - fulfilment 
@@ -28,6 +28,7 @@ services:
     environment:
       - Observability__Trace__Console=false
       - Observability__Trace__Jaeger=true
+      - Documents__Authz__Url=http://fulfilment-authz/check
     depends_on:
       - fulfilment-api
       - fulfilment-authz

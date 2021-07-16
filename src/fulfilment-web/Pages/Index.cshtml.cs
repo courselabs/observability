@@ -14,8 +14,8 @@ namespace Fulfilment.Web.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly DocumentsService _documentsService;
+        private readonly ILogger _logger;
+        private readonly ListDocumentsService _documentsService;
         private readonly ActivitySource _activitySource;
         private readonly ObservabilityOptions _options;
 
@@ -25,7 +25,7 @@ namespace Fulfilment.Web.Pages
         [BindProperty]
         public string UserId { get; set; }
 
-        public IndexModel(DocumentsService documentsService, ILogger<IndexModel> logger, ActivitySource activitySource, ObservabilityOptions options)
+        public IndexModel(ListDocumentsService documentsService, ILogger<IndexModel> logger, ActivitySource activitySource, ObservabilityOptions options)
         {
             _documentsService = documentsService;
             _logger = logger;
@@ -33,14 +33,24 @@ namespace Fulfilment.Web.Pages
             _options = options;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGet()
         {
+            if (Request.Query.ContainsKey("all"))
+            {
+                await LoadDocuments(all: true);
+            }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var requestId =  Guid.NewGuid().ToString();
+            await LoadDocuments();
+            return Page();
+        }
+
+        private async Task LoadDocuments(bool all = false)
+        {
+            var requestId = Guid.NewGuid().ToString();
             Activity postSpan = null;
             if (_options.Trace.CustomSpans)
             {
@@ -53,10 +63,20 @@ namespace Fulfilment.Web.Pages
 
             try
             {
-                _logger.LogDebug("Loading documents for user ID: {UserId}", UserId);
-                Documents = await _documentsService.GetDocuments(UserId);
-                CallFailed = false; 
-                _logger.LogDebug("Loaded documents: {DocumentCount}; user ID: {UserId}", Documents.Count(), UserId);
+                if (all)
+                {
+                    _logger.LogDebug("Loading all documents");
+                    Documents = await _documentsService.GetDocuments();
+                    CallFailed = false;
+                    _logger.LogDebug("Loaded documents: {DocumentCount}", Documents.Count());
+                }
+                else
+                {
+                    _logger.LogDebug("Loading documents for user ID: {UserId}", UserId);
+                    Documents = await _documentsService.GetDocuments(UserId);
+                    CallFailed = false;
+                    _logger.LogDebug("Loaded documents: {DocumentCount}; user ID: {UserId}", Documents.Count(), UserId);
+                }
             }
             catch (Exception ex)
             {
@@ -71,7 +91,6 @@ namespace Fulfilment.Web.Pages
                     postSpan.Dispose();
                 }
             }
-            return Page();
         }
     }
 }

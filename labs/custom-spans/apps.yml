@@ -5,7 +5,7 @@ services:
     ports:
       - "8071:80"
     environment:
-      - OTEL_TRACES_EXPORTER=jaeger
+      - OPENTRACING_JAEGER_ENABLED=true
       - TRACE_CUSTOM_SPANS=true
     networks:
       - tracing 

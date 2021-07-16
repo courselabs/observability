@@ -39,7 +39,7 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 - [Application traces](./labs/tracing/README.md) 
 - [Running Jaeger](./labs/jaeger/README.md)
-- [Custom spans and baggage]()
+- [Custom spans](./labs/custom-spans/README.md)
 
 ## Part 6 - Real-World Observability
 

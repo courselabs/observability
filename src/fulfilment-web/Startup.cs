@@ -2,6 +2,7 @@ using Fulfilment.Web.Configuration;
 using Fulfilment.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,7 +28,13 @@ namespace Fulfilment.Web
 
         public void ConfigureServices(IServiceCollection services)
         {            
-            services.AddRazorPages();
+            services.AddRazorPages()
+                    .AddRazorPagesOptions(options =>
+                    {
+                        options.Conventions
+                            .ConfigureFilter(new IgnoreAntiforgeryTokenAttribute());
+                    });
+
             services.AddHttpClient();
 
             // configure Serilog
@@ -35,7 +42,9 @@ namespace Fulfilment.Web
             services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger));
 
             services.AddSingleton(_options);
-            services.AddTransient<DocumentsService>();
+            services.AddTransient<AuthorizationService>();
+            services.AddTransient<SubmitDocumentService>();
+            services.AddTransient<ListDocumentsService>();
 
             Activity.DefaultIdFormat = ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
