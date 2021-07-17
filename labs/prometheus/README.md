@@ -31,7 +31,7 @@ The default page lets you query metrics - we'll do that shortly. First check som
 
 None of the targets we want to monitor are running, but Prometheus will keep trying to find them.
 
-This [Docker Compose file (apps.yml)](./apps.yml) starts all the apps we used in the previous labs. The containers will connect to the same Docker network as Prometheus, and they're using the DNS names Prometheus is expecting to find.
+This [Docker Compose file (apps.yml)](./apps.yml) starts all the apps we used in the [metrics lab](../metrics/README.md). The containers will connect to the same Docker network as Prometheus, and they're using the DNS names Prometheus is expecting to find.
 
 Run the apps:
 
@@ -60,8 +60,8 @@ Query `app_info` and you'll see output like this:
 
 |Element|Value|
 |-|-|
-|app_info{app_version="1.3.1",assembly_name="Fulfilment.Processor",dotnet_version="3.1.16",instance="fulfilment-processor:9110",job="fulfilment-processor"}|1|
-|app_info{instance="fulfilment-api:80",java_version="11-jre",job="fulfilment-api",version="0.3.0"}|1|
+|`app_info{app_version="1.3.1",assembly_name="Fulfilment.Processor",dotnet_version="3.1.16",instance="fulfilment-processor:9110",job="fulfilment-processor"}`|`1`|
+|`app_info{instance="fulfilment-api:80",java_version="11-jre",job="fulfilment-api",version="0.3.0"}`|`1`|
 
 These are informational metrics, showing the application and runtime version numbers for the document processor and REST API.
 
@@ -89,8 +89,8 @@ Execute a query for `fulfilment_requests_total` and you'll see output like this:
 
 |Element|Value|
 |-|-|
-|fulfilment_requests_total{instance="fulfilment-processor:9110",job="fulfilment-processor",status="failed"}|777|
-|fulfilment_requests_total{instance="fulfilment-processor:9110",job="fulfilment-processor",status="processed"}|17701|
+|`fulfilment_requests_total{instance="fulfilment-processor:9110",job="fulfilment-processor",status="failed"}`|`777`|
+|`fulfilment_requests_total{instance="fulfilment-processor:9110",job="fulfilment-processor",status="processed"}`|`17701`|
 
 Labels are key-value pairs shown in curly braces, and you can use the same syntax in the query to show metrics matching the label.
 

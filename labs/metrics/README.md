@@ -113,7 +113,7 @@ process_cpu_seconds_total 0.47
 
 It's been reset - this is a new instance of the app with a new set of metrics.
 
-Prometheus understands about resets, and if it was collecting from this app it would add the current counter values to the data from the previous instance of the app.
+Prometheus understands about resets, so if you query this metric it would add the current counter values to the data from the previous instance of the app.
 
 </details><br/>
 
