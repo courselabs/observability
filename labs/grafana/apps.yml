@@ -17,8 +17,8 @@ services:
     image: courselabs/obsfun-fulfilment-processor
     environment:
       - Observability__Metrics__IncludeRuntime=true
-      - Observability__StartupDelaySeconds=40
-      - Observability__ExitAfterSeconds=160
+      - Observability__StartupDelaySeconds=20
+      - Observability__ExitAfterSeconds=90
     restart: always
     networks: 
       - fulfilment

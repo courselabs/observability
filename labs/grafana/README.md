@@ -1,86 +1,207 @@
+# Grafana
+
+[Grafana](https://grafana.com/oss/grafana/) is a web-based UI for visualizing data. It can consume data from many different sources, and it's particularly well matched with Prometheus. You might use the Prometheus UI to fine-tune your queries, and then you'd take the PromQL and use it in Grafana.
+
+## Reference
+
+- [Using Prometheus as a data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/)
+- [Panels](https://grafana.com/docs/grafana/latest/panels/) - individual query visualizations
+- [Dashboards](https://grafana.com/docs/grafana/latest/panels/add-a-panel/) - combining multiple panels
+- [Best practices for creating dashboards](https://grafana.com/docs/grafana/latest/best-practices/best-practices-for-creating-dashboards/)
 
 ## Run Grafana
 
-- grafana.yml
-- labs\grafana\config\prometheus.yml adds `tier` label
+Grafana is a cross-platform app, written in Go. You can [download Grafana](https://grafana.com/grafana/download?pg=get&plcmt=selfmanaged-box1-cta1) for different platforms - but we'll run in a Docker container:
 
+- [grafana.yml](./grafana.yml) - spcifies containers for Prometheus and Grafana
+- [prometheus.yml](./config/prometheus.yml) - the Prometheus config we'll be using; sets up scraping for various apps, and adds the `tier` label
+
+Run the metrics components:
+
+```
 docker-compose -f labs/grafana/grafana.yml up -d
+```
 
-http://localhost:9090/targets
+> Check the Prometheus status at http://localhost:9090/targets
 
-> Down, not running yet
+You'll see all the targets are down, but the `tier` label is set along with `instance` and `job`. You can add to target labels like this to include infrastructure-specific details; you might include the region for cloud services, or the operating system and CPU architecture.
 
-http://localhost:3000
+> Browse to Grafana at http://localhost:3000
 
-- username: admin
-- password: admin
+Sign in with the default credentials - you'll be asked to create a new password, but you can skip that step:
 
-> Skip new password
+- username: `admin`
+- password: `admin`
 
-Add data source:
+The homepage has a link to create a data source:
 
-- Prometheus
-- http://prometheus:9090
+![](../../img/grafana-first-run.png)
 
-> Save & test
+📋 Add a Prometheus data source, with the URL `http://prometheus:9090` and test it.
 
-## Create a new dashboard
+<details>
+  <summary>Need some help?</summary>
 
-_Create...Dashboard_
+Click the _Add data source_ panel from the homepage, or browse to http://localhost:3000/datasources/new.
 
-Add empty panel:
+- Select Prometheus as the data source type
+- Enter `http://prometheus:9090` as the URL
+- Leave all other fields as they are
 
-- visualization preview
-- data source (bottom panel 0 query & transform)
-- display options (right panel)
+> Click _Save & test_ and you'll see the message _Data source is working_.
 
-- Metrics browser: promql, `up`
-- top right, _time series_ is visualization option
-- switch to _table_
-- back in query panel - switch to format=table and check _Instant_
+</details><br/>
 
+That's all the setup you need - now you can create a dashboard with panels to query Prometheus.
 
-To change data - either change query or edit representation
+## Create an uptime panel
 
-- sum without(job, tier) (up)
-- _transform_ panel
-- _organize fields_ - hide Time, rename others
-- in table panel to right, _value mappings_ - transform 0 to OFFLINE and 1 to ok
-- click apply
+Click on the plus icon from the left menu and select _Create...Dashboard_. You'll see a screen like this:
+
+![](../../img/grafana-empty-dashboard.png)
+
+Every visualization is a panel within a dashboard.
+
+📋 Add a new panel to show the uptime of Prometheus targets using the `up` metric.
+
+<details>
+  <summary>Need some help?</summary>
+
+Click _Add empty panel_ and enter `up` in the query panel. You'll see a preview of the visualization, which is not quite what we want:
+
+![](../../img/grafana-up-preview.png)
+
+</details><br/>
+
+The panel designer is in three sections:
+
+- visualization preview at the top
+- data on the bottom, including the query and transforms
+- display options on the right, including visualization type
+
+The defaults are to use a _Time series_ visualization, representing a range vector from Prometheus.
+
+Now it's time to find your way around :) 
+
+📋 Change the panel setup so Grafana treats this as a table showing an instant vector, using a table visualization. Set up the table so the instance name and status are the only fields, showing `ok` for instances which are up and `OFFLINE` for others.
+
+Here's what you're aiming for:
+
+![](../../img/grafana-uptime-table.png)
+
+<details>
+  <summary>Need some help?</summary>
+
+In the _Query_ panel:
+
+- set the format to Table
+- check _Instant_
+
+In the display options:
+
+- change type to Table
+
+In the _Transform_ panel:
+
+- Select _Organize fields_ 
+    - hide all except instance and value
+    - rename value to Status
+
+Back in display options:
+
+- Add a title
+
+- scroll to  _Value mappings_ and click _Edit value mappings_
+    - add a mapping for value=0 to display `OFFLINE` 
+    - add a mapping for value=1 to display `ok`
+    - click _Apply_
+
+Click _Apply_ at the top-right to update your panel and return to the dashboard.
+
+</details><br/>
+
+Grafana dashboards can be set to auto-refresh. Select to refresh every 5 seconds (top-right of the dashboard), so when we start the apps you'll see the table update as they come online.
 
 ## Visualization Types
 
-Start apps
+Start the apps, so Prometheus will have some metrics to collect:
 
-- apps.yml
+- [apps.yml](./apps.yml) - specifies the node exporter, document API and three document processors; one of the processors is configured to keep exiting and restarting.
 
+Run the apps:
+
+```
 docker-compose -f labs/grafana/apps.yml up -d
+```
 
-- back in grafana, set auto-refresh to 5s - see instances come online
+> Switch back to Grafana - you'll see  the table update as instances come online.
 
-build a graph of uptime
+If you watch long enough you'll see processor instance 1 flicks between `ok` and `OFFLINE`. The table we have shows the current status, and it would also be useful to see the history of each component's uptime.
 
-- add panel
-- sum without(job, tier) (up)
-- vis type: state timeline
-- change threshold - base = red, next = 1, green
-- legend {{instance}}
-- legend mode: hidden
-- add same value mapping
+Click the add panel icon in the top menu (it's the bar chart with a plus sign), and select _Add an empty panel_.
 
-- set time to last (e.g.) 15 minutes
+Last time we used a transform to hide labels, but we can do that in the query too:
 
-![](../../img/grafana-uptime.png)
+- set the query to be `sum without(job, tier) (up)`
+- change the visualization type to _State timeline_
+- add the same value mapping to show 0 as `OFFLINE` and 1 as `ok`
+- change the time range to (e.g.) last 15 minutes
+
+We're getting there, just some tidying up to do.
+
+📋 Edit the query and display options so the legend on the y-axis is more useful, hide the x-axis legend, and show `OFFLINE` as a red bar and `ok` as green.
+
+This is the goal:
+
+![](../../img/grafana-uptime-timeline.png)
+
+<details>
+  <summary>Need some help?</summary>
+
+In the display options:
+
+- add a panel title
+
+- scroll to  _Legend_
+    - set _Legend mode_ to _Hidden_
+
+- scroll to  _Thresholds_ 
+    - set the base value to the colour red
+    - set the next threshold to 1 and the colour green
+
+In the query panel:
+
+- set the legend format to `{{instance}}`
+
+Click _Apply_.
+
+</details><br/>
+
+That's better - the dashboard now shows current and historical status for all the instances. We can see there's a recurring problem with processor 1, which isn't clear from the table alone.
 
 ## Lab
 
-Split into rows and filter data:
+You'll have several dashboards for your apps, showing information at different levels.
 
-- infrastructure with node instance
-- web with fulfilment-api instance
-- backend with processor instances
-- save dashboard
+For this lab we'll stick with instance uptime, but your job is to split the dashboard into multiple rows, one for each tier of the application:
+
+- an infrastructure row with the node exporter instance
+- a web row with the docunent API instance
+- a backend row with the processor instances
+
+Each row should have a current status table and an timeline for the instances in that tier, something like this:
 
 ![](../../img/grafana-uptime-dashboard.png)
 
+Save your dashboard as JSON so you can load it into another Grafana instance later.
 
+> Stuck? Try [hints](hints.md) or check the [solution](solution.md).
+
+___
+## Cleanup
+
+Cleanup by removing all containers:
+
+```
+docker rm -f $(docker ps -aq)
+```
