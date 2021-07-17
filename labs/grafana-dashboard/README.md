@@ -1,32 +1,56 @@
+# Building Grafana Dashboards
+
+It's easy to go overboard with visualizations and build fancy panels for every metric you capture. There will be too much information if you have more than a dozen or so panels on your dashboard, and it will stop being effective. You should build your dashboards starting from wireframe where you sketch out panels which answer the questions you have about the status of your app.
+
+## Reference
+ 
+- [Best practices for creating dashboards](https://grafana.com/docs/grafana/latest/best-practices/best-practices-for-creating-dashboards/)
+- [Sample dashboards](https://grafana.com/grafana/dashboards) - official and community-built examples
+- [Grafana configuration](https://grafana.com/docs/grafana/latest/administration/configuration/)
+- [Automatic provisioning for Grafana](https://grafana.com/docs/grafana/latest/administration/provisioning/)
 
 ## Run Prometheus & Grafana
 
-- metrics.yml - adds grafana setup
-- labs\grafana-dashboard\config\grafana\datasource-prometheus.yml
-- labs\grafana-dashboard\config\grafana\custom.ini
+We'll run the metrics components in Docker containers again, but this time we'll make use of the automation options so we don't need to configure a data source manually:
 
+- [metrics.yml](./metrics.yml) - Prometheus and Grafana, with custom configuration files
+- [datasource-prometheus.yml](./config\grafana\datasource-prometheus.yml) - provisioning to set up the Prometheus data source
+- [custom.ini](.\config\grafana\custom.ini) - custom configuration settings
+
+Run the metrics containers:
+
+```
 docker-compose -f labs/grafana-dashboard/metrics.yml up -d
+```
 
-http://localhost:3000
+> Browse to Grafana at http://localhost:3000
 
-- username: admin
-- password: obsfun
+Sign in with the configured credentials:
 
-> Light theme
+- username: `admin`
+- password: `obsfun`
 
-http://localhost:3000/datasources
+We're using the light theme by default now; browse to http://localhost:3000/datasources and you'll see Prometheus is already configured.
 
-> Prometheus is there
+Prometheus is running too, using a new configuration:
 
-- labs\grafana-dashboard\config\prometheus.yml - new labels & relabel
+- [prometheus.yml](./config\prometheus.yml) - we have the `tier` label, and a new label for the document processor - `instance_number`; that will have 1, 2 or 3 which is easier to work with than the full instance label.
 
-http://localhost:9090/classic/service-discovery
+> Browse to http://localhost:9090/service-discovery
 
-`up`
+Click _show more_ for the fulfilment processor job, and you'll see the new target labels which will be applied to all metrics.
 
 ## Visualzing counters and gauges
 
+We're going to build a dashboard for the demo app, focusing on some of the [SRE Golden Signals](https://sre.google/sre-book/monitoring-distributed-systems/):
+
 > TODO - jamboard sketch
+
+Different visualizations work better for different types of data. In these exercises you'll be given the PromQL and some guidance, but you don't need to represent panels exactly as they are here.
+
+All our components record memory usage
+
+> TO HERE
 
 Saturation - Memory
 

@@ -7,7 +7,6 @@
 - [Using Prometheus as a data source](https://grafana.com/docs/grafana/latest/datasources/prometheus/)
 - [Panels](https://grafana.com/docs/grafana/latest/panels/) - individual query visualizations
 - [Dashboards](https://grafana.com/docs/grafana/latest/panels/add-a-panel/) - combining multiple panels
-- [Best practices for creating dashboards](https://grafana.com/docs/grafana/latest/best-practices/best-practices-for-creating-dashboards/)
 
 ## Run Grafana
 
