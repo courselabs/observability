@@ -1,7 +1,23 @@
-- avg by(le) (rate(fulfilment_processing_seconds_bucket[5m])) into heatmap; legend={{le}}, format=heatmap, panel/axes/data format=time series buckets
+# Lab Solution
 
+This is quite fiddly, but worth doing because you'll use these a lot.
 
-(node_memory_MemTotal_bytes - node_memory_MemFree_bytes - node_memory_Buffers_bytes - node_memory_Cached_bytes - node_memory_SReclaimable_bytes) / node_memory_MemTotal_bytes 
+## Configure the heatmap
 
+Start with a new panel using the query:
 
-min without(mountpoint) (node_filesystem_avail_bytes) / min without(mountpoint) (node_filesystem_size_bytes)
+```
+avg by(le) (rate(fulfilment_processing_seconds_bucket[5m]))
+```
+
+Set the format in the query panel to be `Heatmap`:
+
+![](../../img/grafana-dashboard-lab-1.png)
+
+Then in the display options set the visualization type to `Heatmap` and under the _Axes_ section, set the _Data format_ to `Time series buckets`:
+
+![](../../img/grafana-dashboard-lab-2.png)
+
+## Sample solution
+
+You can load the completed dashboard with the heatmap from `lab/dashboard.json`.

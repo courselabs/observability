@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 1,
+  "id": 6,
   "links": [],
   "panels": [
     {
@@ -31,154 +31,6 @@
       "panels": [],
       "title": "Backend",
       "type": "row"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineStyle": {
-              "fill": "solid"
-            },
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 5,
-        "x": 0,
-        "y": 1
-      },
-      "id": 4,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "histogram_quantile(0.90, sum without(instance, job, tier)(rate(fulfilment_processing_seconds_bucket[5m])))",
-          "interval": "",
-          "legendFormat": "{{instance_number}}",
-          "refId": "A"
-        }
-      ],
-      "title": "90th Percentile Processing Duration",
-      "type": "timeseries"
-    },
-    {
-      "cards": {
-        "cardPadding": null,
-        "cardRound": null
-      },
-      "color": {
-        "cardColor": "#b4ff00",
-        "colorScale": "sqrt",
-        "colorScheme": "interpolateOranges",
-        "exponent": 0.5,
-        "mode": "spectrum"
-      },
-      "dataFormat": "tsbuckets",
-      "datasource": null,
-      "gridPos": {
-        "h": 8,
-        "w": 8,
-        "x": 5,
-        "y": 1
-      },
-      "heatmap": {},
-      "hideZeroBuckets": false,
-      "highlightCards": true,
-      "id": 7,
-      "legend": {
-        "show": false
-      },
-      "pluginVersion": "8.0.5",
-      "reverseYBuckets": false,
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "avg by(le) (rate(fulfilment_processing_seconds_bucket[5m]))",
-          "format": "heatmap",
-          "instant": false,
-          "interval": "",
-          "legendFormat": "{{le}}",
-          "refId": "A"
-        }
-      ],
-      "title": "Average Processing Duration",
-      "tooltip": {
-        "show": true,
-        "showHistogram": false
-      },
-      "type": "heatmap",
-      "xAxis": {
-        "show": true
-      },
-      "xBucketNumber": null,
-      "xBucketSize": null,
-      "yAxis": {
-        "decimals": null,
-        "format": "dtdurations",
-        "logBase": 1,
-        "max": null,
-        "min": null,
-        "show": true,
-        "splitFactor": null
-      },
-      "yBucketBound": "auto",
-      "yBucketNumber": null,
-      "yBucketSize": null
     },
     {
       "datasource": null,
@@ -236,7 +88,7 @@
       "gridPos": {
         "h": 8,
         "w": 5,
-        "x": 13,
+        "x": 0,
         "y": 1
       },
       "id": 21,
@@ -295,7 +147,7 @@
       "gridPos": {
         "h": 8,
         "w": 4,
-        "x": 18,
+        "x": 5,
         "y": 1
       },
       "id": 17,
@@ -344,171 +196,6 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "dtdurations"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 7,
-        "x": 0,
-        "y": 10
-      },
-      "id": 2,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "single"
-        }
-      },
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": " sum by(status) (rate(http_server_requests_seconds_sum{job=\"fulfilment-api\"}[5m])) /  sum by(status) (rate(http_server_requests_seconds_count{job=\"fulfilment-api\"}[5m])) ",
-          "interval": "",
-          "legendFormat": "{{status}}",
-          "refId": "A"
-        }
-      ],
-      "title": "HTTP Request Duration",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "auto",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "max": 15,
-          "min": 0,
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 6,
-        "x": 7,
-        "y": 10
-      },
-      "id": 29,
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom"
-        },
-        "tooltip": {
-          "mode": "none"
-        }
-      },
-      "targets": [
-        {
-          "exemplar": true,
-          "expr": "tomcat_sessions_active_current_sessions",
-          "interval": "",
-          "legendFormat": "",
-          "refId": "A"
-        }
-      ],
-      "title": "Active Tomcat Sessions",
-      "type": "timeseries"
-    },
-    {
-      "datasource": null,
-      "fieldConfig": {
-        "defaults": {
-          "color": {
             "mode": "thresholds"
           },
           "mappings": [],
@@ -536,7 +223,7 @@
       "gridPos": {
         "h": 8,
         "w": 4,
-        "x": 13,
+        "x": 0,
         "y": 10
       },
       "id": 15,
@@ -621,7 +308,7 @@
       "gridPos": {
         "h": 8,
         "w": 5,
-        "x": 17,
+        "x": 4,
         "y": 10
       },
       "id": 22,
@@ -692,7 +379,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 5,
+        "w": 8,
         "x": 0,
         "y": 19
       },
@@ -753,8 +440,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 5,
-        "x": 5,
+        "w": 7,
+        "x": 8,
         "y": 19
       },
       "id": 19,
@@ -839,8 +526,8 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 5,
-        "x": 10,
+        "w": 7,
+        "x": 15,
         "y": 19
       },
       "id": 23,
@@ -865,143 +552,6 @@
       ],
       "title": "CPU Usage",
       "type": "timeseries"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "Prometheus",
-      "description": "",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 5,
-        "w": 7,
-        "x": 15,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 27,
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": true,
-        "total": false,
-        "values": false
-      },
-      "libraryPanel": {
-        "description": "",
-        "meta": {
-          "connectedDashboards": 2,
-          "created": "2021-07-14T14:58:49Z",
-          "createdBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          },
-          "folderName": "General",
-          "folderUid": "",
-          "updated": "2021-07-14T14:58:49Z",
-          "updatedBy": {
-            "avatarUrl": "/avatar/46d229b033af06a191ff2267bca9ae56",
-            "id": 1,
-            "name": "admin"
-          }
-        },
-        "name": "Network Traffic",
-        "type": "graph",
-        "uid": "rucE0Yinz",
-        "version": 1
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "maxPerRow": 6,
-      "nullPointMode": "connected",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "8.0.5",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": "node",
-      "seriesOverrides": [
-        {
-          "alias": "/.*_in/",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "expr": "irate(node_network_receive_bytes_total{instance=~'$node'}[5m])*8 or irate(node_network_receive_bytes{instance=~'$node'}[5m])*8",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{device}}_in",
-          "metric": "",
-          "refId": "A",
-          "step": 1200,
-          "target": ""
-        },
-        {
-          "expr": "irate(node_network_transmit_bytes_total{instance=~'$node'}[5m])*8 or irate(node_network_transmit_bytes{instance=~'$node'}[5m])*8",
-          "interval": "",
-          "intervalFactor": 2,
-          "legendFormat": "{{device}}_out",
-          "refId": "B",
-          "step": 1200
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Network Traffic",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bits",
-          "label": "bits in (-) / bits out (+)",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "schemaVersion": 30,
@@ -1016,7 +566,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Observability Fundamentals",
-  "uid": "-esahYm7z",
-  "version": 5
+  "title": "Observability Fundamentals - Part 1",
+  "uid": "OxHSUjmnk",
+  "version": 2
 }
