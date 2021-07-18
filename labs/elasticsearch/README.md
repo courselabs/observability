@@ -237,3 +237,12 @@ Now write some match queries to find:
 - what was the request ID for the one error which was not a problem with the document service?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
+
+___
+## Cleanup
+
+Cleanup by removing all containers:
+
+```
+docker rm -f $(docker ps -aq)
+```
