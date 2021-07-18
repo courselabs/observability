@@ -98,8 +98,8 @@ namespace Fulfilment.Processor
                 }
                 else
                 {
-                    _logger.LogTrace($"Fulfilment requested. Request ID: {requestId}");
-                    _logger.LogError($"Fulfilment error! Request ID: {requestId}. Error: {errorMessage}");
+                    _logger.LogTrace("Fulfilment requested. Request ID: " + requestId);
+                    _logger.LogError("Fulfilment error! Request ID: " + requestId +". Error: " + errorMessage);
                 }
             }
         }
