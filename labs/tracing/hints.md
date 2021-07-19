@@ -10,6 +10,4 @@ There are different standards for propagating trace headers, but the most common
 
 Set a valid ID in that header and you should see it used in both sets of container logs.
 
-
-
 > Need more? Here's the [solution](solution.md).
