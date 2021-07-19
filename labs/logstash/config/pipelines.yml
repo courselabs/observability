@@ -1,5 +1,2 @@
-- pipeline.id: fulfilment-csv-to-es
-  path.config: "/pipelines/fulfilment-csv-to-es.conf"
-  
-- pipeline.id: apache-to-es
-  path.config: "/pipelines/apache-to-es.conf"
+- pipeline.id: fulfilement-csv
+  path.config: "/pipelines/fulfilment-csv.conf"

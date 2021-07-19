@@ -33,7 +33,7 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 - [Running Kibana](./labs/kibana/README.md)
 - [Searching with the query DSL](./labs/query-dsl/README.md)
-- [Building Kibana dashboards]() # saved searches; visualizations; dasboards
+- [Building Kibana dashboards](./labs/kibana-dashboard/README.md) 
 
 ## Part 5 - Distributed Tracing
 
