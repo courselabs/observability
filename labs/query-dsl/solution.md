@@ -1,5 +1,8 @@
 # Lab Solution
 
+Run this query in the console:
+
+```
 GET /fulfilment-json/_search?pretty&size=1
 { 
     "query": 
@@ -10,7 +13,7 @@ GET /fulfilment-json/_search?pretty&size=1
         },
       "filter": [
         { "term" : { "LogLevel": "ERROR" }},
-        { "term" : { "SourceContext": "Fulfilment.Processor.Program" }},
+        { "term" : { "SourceContext": "Fulfilment.Processor.DocumentProcessor" }},
         { "term" : { "AppVersion": "1.0.0.0" }},
         { "term" : { "EventType": "Fulfilment.Failed" }},
         { "range": { "RequestId": { "gte": "30000000", "lte" : "32000000" }}}
@@ -18,5 +21,6 @@ GET /fulfilment-json/_search?pretty&size=1
     }
   }
 }
+```
 
-> Same number of hits as Kibana dashboard
+> You should see the same number of hits that you saw in the _Discover_ tab.
