@@ -59,10 +59,13 @@ namespace Fulfilment.Web.Services
             if (_options.Trace.CustomSpans)
             {
                 authzSpan = _activitySource.StartActivity("authz-check");
-                authzSpan.AddTag("span.kind", "internal")
+                if (authzSpan != null)
+                {
+                    authzSpan.AddTag("span.kind", "internal")
                          .AddTag("user.id", userId)
                          .AddTag("action.type", $"{action}")
                          .AddBaggage("request.source", "fulfilment-web");
+                }
             }
 
             try

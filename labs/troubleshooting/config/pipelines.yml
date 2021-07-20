@@ -3,6 +3,3 @@
 
 - pipeline.id: fulfilment-web
   path.config: "/pipelines/fulfilment-web.conf"
-
-- pipeline.id: fulfilment-authz
-  path.config: "/pipelines/fulfilment-authz.conf"

@@ -7,6 +7,7 @@ services:
     environment:
       - OPENTRACING_JAEGER_ENABLED=true
       - TRACE_CUSTOM_SPANS=true
+      - TRACE_JAEGER_HOST=metrics
     networks:
       - metrics
       - tracing
@@ -18,10 +19,10 @@ services:
       - "8072:80"
     environment:
       - Observability__Logging__LogFilePath=logs/fulfilment-authz.json
-      - Observability__Metrics__Enabled=true
+      - Observability__Metrics__On=true
       - Observability__Trace__Jaeger=true
     volumes:
-      - ./config/logging.json:/app/config/override.json
+      - ./config/override.json:/app/config/override.json
       - ./data:/app/logs
     networks:
       - metrics
@@ -36,15 +37,15 @@ services:
       - Observability__Logging__LogFilePath=logs/fulfilment-web.json
       - Observability__Metrics__Enabled=true
       - Observability__Trace__Jaeger=true
+      - Observability__Trace__HeaderFormat=B3
       - Documents__Authz__Url=http://fulfilment-authz/check
     volumes:
-      - ./config/logging.json:/app/config/override.json
+      - ./config/override.json:/app/config/override.json
       - ./data:/app/logs
     depends_on:
       - fulfilment-api
       - fulfilment-authz
     networks:
-      - metrics
       - tracing 
       - fulfilment 
 
@@ -52,10 +53,10 @@ services:
     image: courselabs/obsfun-fulfilment-processor
     environment:
       - Observability__Logging__LogFilePath=logs/fulfilment-processor-1.json
-      - Observability__StartupDelaySeconds=10
+      - Observability__StartupDelaySeconds=30
       - Observability__ExitAfterSeconds=120
     volumes:
-      - ./config/logging.json:/app/config/override.json
+      - ./config/override.json:/app/config/override.json
       - ./data:/app/logs
     restart: always
     networks: 
@@ -65,10 +66,10 @@ services:
   fulfilment-processor-2:
     image: courselabs/obsfun-fulfilment-processor
     environment:
-      - Observability__Logging__LogFilePath=logs/fulfilment-processor-2.json
+      - Observability__Logging__LogFilePath=logs/fulfilment-2.json
       - Observability__Metrics__Factor=1.5
     volumes:
-      - ./config/logging.json:/app/config/override.json
+      - ./config/override.json:/app/config/override.json
       - ./data:/app/logs
     networks: 
       - fulfilment

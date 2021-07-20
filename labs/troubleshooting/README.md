@@ -10,13 +10,15 @@ Plenty of things can go wrong in the setup, which will manifest as your apps mis
 
 ## Lab
 
-This one is all lab :) There are four sets of containers to run:
+This one is all lab :) 
+
+There are four sets of containers to run:
 
 - [metrics.yml](./metrics.yml) - Prometheus (we won't use Grafana this time round)
 - [logging.yml](./logging.yml) - the ELK stack
 - [tracing.yml](./tracing.yml) - Jaeger
 - [apps.yml](./apps.yml) - application containers
-- [load.yml](./load.yml) - a load-test tool ([Fortio]()), configured to send requests to the web app
+- [load.yml](./load.yml) - a load-test tool ([Fortio](https://fortio.org/)), configured to send requests to the web app to generate instrumentation 
 
 Start all the containers:
 
@@ -24,9 +26,7 @@ Start all the containers:
 docker-compose -f labs/troubleshooting/metrics.yml -f labs/troubleshooting/logging.yml -f labs/troubleshooting/tracing.yml -f labs/troubleshooting/apps.yml -f labs/troubleshooting/load.yml up -d
 ```
 
-> Browse to the app at http://localhost:8070 and list the documents for the default user
-
-
+> Browse to the app at http://localhost:8070 and list the documents for the default user, to check the app is OK
 
 Your goal is to get the observability stack working correctly and reporting everything:
 
@@ -38,14 +38,16 @@ Your goal is to get the observability stack working correctly and reporting ever
 
 ![](../../img/troubleshooting-jaeger.png)
 
-- build an area visualization in Kibana at http://localhost:5601 to show count of documents over time, split by `AppName` and you should see three applications writing lots of logs:
+- an area visualization in Kibana at http://localhost:5601 showing count of documents over time, split by `AppName` and by `MachineName`, should show four application instances writing logs:
 
 ![](../../img/troubleshooting-kibana.png)
 
-This is not meant to be a Docker troubleshooting exercise, but all the app and networking configuration is in Docker Compose. You'll need to fix things up by editing the application Compose file [app.yml](./app.yml) when you find the issues, then running this command:
+This is not meant to be a Docker troubleshooting exercise - all the app and networking configuration is in Docker Compose, so there may be issues there or in the observability component configuration.
+
+When you find issues, update the files to fix them and run this to restart the containers:
 
 ```
-docker-compose -f labs/troubleshooting/apps.yml up -d
+docker-compose -f labs/troubleshooting/metrics.yml -f labs/troubleshooting/logging.yml -f labs/troubleshooting/tracing.yml -f labs/troubleshooting/apps.yml restart
 ```
 
 Don't go straight to the solution! These are the sort of issues you will get all the time, so it's good to start working through the steps to diagnose problems.

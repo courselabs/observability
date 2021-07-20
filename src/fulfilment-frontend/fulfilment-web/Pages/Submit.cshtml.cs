@@ -41,11 +41,14 @@ namespace Fulfilment.Web.Pages
             if (_options.Trace.CustomSpans)
             {
                 postSpan = _activitySource.StartActivity("submit-document");
-                postSpan.AddTag("span.kind", "internal")
+                if (postSpan != null)
+                {
+                    postSpan.AddTag("span.kind", "internal")
                         .AddTag("user.id", UserId)
                         .AddTag("request.id", requestId)
                         .AddTag("document.filename", Filename)
                         .AddBaggage("request.id", requestId);
+                }
             }
 
             try

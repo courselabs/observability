@@ -63,9 +63,12 @@ namespace Fulfilment.Web.Pages
             if (_options.Trace.CustomSpans)
             {
                 postSpan = _activitySource.StartActivity("list-documents");
-                postSpan.AddTag("span.kind", "internal")
-                        .AddTag("user.id", UserId)
-                        .AddBaggage("transaction.id", transactionId);
+                if (postSpan != null)
+                {
+                    postSpan.AddTag("span.kind", "internal")
+                            .AddTag("user.id", UserId)
+                            .AddBaggage("transaction.id", transactionId);
+                }
             }
 
             try

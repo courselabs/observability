@@ -56,9 +56,12 @@ namespace Fulfilment.Web.Services
             if (_options.Trace.CustomSpans)
             {
                 apiSpan = _activitySource.StartActivity("document-api-call");
-                apiSpan.AddTag("span.kind", "internal")
+                if (apiSpan != null)
+                {
+                    apiSpan.AddTag("span.kind", "internal")
                        .AddTag("user.id", userId)
                        .AddTag("action.type", $"{DocumentAction.Submit}");
+                }
             }
 
             ITimer timer = null;

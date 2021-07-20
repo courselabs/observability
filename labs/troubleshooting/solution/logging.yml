@@ -1,0 +1,14 @@
+services:
+
+  logstash:
+    image: courselabs/logstash:7.10
+    volumes:
+      - ../data:/data
+      - ./pipelines:/pipelines
+      - ./pipelines.yml:/usr/share/logstash/config/pipelines.yml
+    networks:
+      - logging
+
+networks:
+  logging:
+    name: obsfun-logging

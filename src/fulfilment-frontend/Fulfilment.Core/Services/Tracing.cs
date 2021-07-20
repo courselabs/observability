@@ -10,36 +10,43 @@ namespace Fulfilment.Core.Services
     {
         public static IServiceCollection AddTracing(this IServiceCollection services, Configuration.TraceOptions options)
         {
-            ConfigureActivity(options);
-
             var assembly = Assembly.GetEntryAssembly().GetName();
-            services.AddOpenTelemetryTracing(builder =>
-            {
-                builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(assembly.Name))
-                       .AddSource(assembly.Name)
-                       .AddAspNetCoreInstrumentation()
-                       .AddHttpClientInstrumentation();
 
-                if (options.Console)
+            // HACK - the sdk doesn't really support B3
+            // if you configure B3 then spans aren't written, which will break traces
+            if (options.HeaderFormat != "B3")
+            {
+                ConfigureActivity(options);
+
+                
+                services.AddOpenTelemetryTracing(builder =>
                 {
-                    builder.AddConsoleExporter();
-                }
-                if (options.Jaeger)
-                {
-                    builder.AddJaegerExporter(opts =>
+                    builder.SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(assembly.Name))
+                           .AddSource(assembly.Name)
+                           .AddAspNetCoreInstrumentation()
+                           .AddHttpClientInstrumentation();
+
+                    if (options.Console)
                     {
-                        opts.AgentHost = options.Agent.Host;
-                        opts.AgentPort = options.Agent.Port;
-                    });
-                }
-            });
-            
-            return services.AddSingleton(new ActivitySource($"{assembly.Name}", $"{assembly.Version}"));            
+                        builder.AddConsoleExporter();
+                    }
+                    if (options.Jaeger)
+                    {
+                        builder.AddJaegerExporter(opts =>
+                        {
+                            opts.AgentHost = options.Agent.Host;
+                            opts.AgentPort = options.Agent.Port;
+                        });
+                    }
+                });                
+            }
+
+            return services.AddSingleton(new ActivitySource($"{assembly.Name}", $"{assembly.Version}")); ;
         }
 
         private static void ConfigureActivity(Configuration.TraceOptions options)
         {
-            Activity.DefaultIdFormat = ActivityIdFormat.W3C;
+            Activity.DefaultIdFormat =  ActivityIdFormat.W3C;
             Activity.ForceDefaultIdFormat = true;
 
             if (options.Baggage.Tag)
