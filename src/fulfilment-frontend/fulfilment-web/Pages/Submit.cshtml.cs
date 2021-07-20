@@ -50,11 +50,13 @@ namespace Fulfilment.Web.Pages
 
             try
             {
+                _logger.LogDebug("Submitting document, filename: {DocumentFilename}; user ID: {UserId}", Filename, UserId);
                 Document = await _submitService.SubmitDocument(UserId, Filename);
+                _logger.LogInformation("Sumitted document, ID: {DocumentId}; filename: {DocumentFilename}; user ID: {UserId}", Document.Id, Filename, UserId);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"API call failed: {ex}");
+                _logger.LogError("API call failed: {Exception}", ex);
                 Document = null;
                 CallFailed = true;
             }

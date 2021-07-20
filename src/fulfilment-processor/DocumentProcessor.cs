@@ -62,7 +62,14 @@ namespace Fulfilment.Processor
                 {
                     _logger.LogTrace("{EventType}: Request ID: {RequestId}", EventType.Requested, requestId);
                     _logger.LogDebug("{EventType}: Request ID: {RequestId}", EventType.InFlight, requestId);
-                    _logger.LogDebug("{EventType}: Request ID: {RequestId}. Took: {Duration}ms.", EventType.Processed, requestId, duration);
+                    if (_options.Logging.UseInfoForDurations)
+                    {
+                        _logger.LogInformation("{EventType}: Request ID: {RequestId}. Took: {Duration}ms.", EventType.Processed, requestId, duration);
+                    }
+                    else
+                    {
+                        _logger.LogDebug("{EventType}: Request ID: {RequestId}. Took: {Duration}ms.", EventType.Processed, requestId, duration);
+                    }
                 }
                 else
                 {

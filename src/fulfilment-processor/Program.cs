@@ -87,7 +87,7 @@ namespace Fulfilment.Processor
                 {
                     loggerConfig.WriteTo.File(
                         formatter,
-                        "logs/fulfilment-processor.json",
+                        loggingOptions.LogFilePath,
                         shared: true);
                 }
                 if (loggingOptions.Console)
@@ -107,8 +107,10 @@ namespace Fulfilment.Processor
                 }
             }
 
-            var logger = loggerConfig.Enrich.WithAppVersion().CreateLogger();
-            return logger;
+            loggerConfig.Enrich.WithAppVersion()
+                        .Enrich.WithAppName();
+
+            return loggerConfig.CreateLogger();
         }
     }
 }

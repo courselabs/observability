@@ -1,6 +1,7 @@
+using Fulfilment.Core.Application;
 using Fulfilment.Core.Configuration;
+using Fulfilment.Core.Logging;
 using Fulfilment.Core.Services;
-using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -35,11 +36,12 @@ namespace Fulfilment.Web
             services.AddHttpClient();
 
             services.AddSingleton(_options);
+            services.AddSingleton<SetupLogger>();
             services.AddTransient<AuthorizationService>();
             services.AddTransient<SubmitDocumentService>();
             services.AddTransient<ListDocumentsService>();
 
-            services.AddLogging(Configuration, _options.Trace);
+            services.AddLogging(Configuration, _options);
             services.AddTracing(_options.Trace);
         }
 
@@ -56,6 +58,7 @@ namespace Fulfilment.Web
 
             app.UseStaticFiles();
             app.UseRouting();
+            app.UseMetrics(_options.Metrics);
 
             app.UseEndpoints(endpoints =>
             {

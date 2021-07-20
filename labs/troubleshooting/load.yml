@@ -1,0 +1,26 @@
+services:
+
+  fortio-web-all:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 15 -t 60s http://fulfilment-web/index?all
+    restart: always
+    networks:
+      - fulfilment
+
+  fortio-web-authorized:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 9 -t 60s http://fulfilment-web/index?userId=0421
+    restart: always
+    networks:
+      - fulfilment
+
+  fortio-web-unauthorized:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 3 -t 60s http://fulfilment-web/index?userId=1024
+    restart: always
+    networks:
+      - fulfilment
+
+networks:
+  fulfilment:
+    name: obsfun-fulfilment

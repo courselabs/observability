@@ -1,3 +1,4 @@
+using Fulfilment.Core.Application;
 using Fulfilment.Core.Configuration;
 using Fulfilment.Core.Services;
 using Microsoft.AspNetCore.Builder;
@@ -24,13 +25,14 @@ namespace Fulfilment.Authorization
             services.AddHttpClient();
             services.AddControllers();
 
-            services.AddLogging(Configuration, _options.Trace);
+            services.AddLogging(Configuration, _options);
             services.AddTracing(_options.Trace);
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseRouting();
+            app.UseMetrics(_options.Metrics);
 
             app.UseEndpoints(endpoints =>
             {

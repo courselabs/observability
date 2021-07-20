@@ -1,0 +1,23 @@
+global:
+  scrape_interval: 30s
+
+scrape_configs:       
+  - job_name: 'fulfilment-web'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-web']
+
+  - job_name: 'fulfilment-authz'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-authz']
+
+  - job_name: 'fulfilment-processor'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-processor-1:9110', 'fulfilment-processor-2:9110']
+      
+  - job_name: 'fulfilment-api'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['fulfilment-api']

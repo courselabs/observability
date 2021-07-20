@@ -75,19 +75,19 @@ namespace Fulfilment.Web.Pages
                     _logger.LogDebug("Loading all documents");
                     Documents = await _documentsService.GetDocuments();
                     CallFailed = false;
-                    _logger.LogDebug("Loaded documents: {DocumentCount}", Documents.Count());
+                    _logger.LogInformation("Loaded documents: {DocumentCount}", Documents.Count());
                 }
                 else
                 {
                     _logger.LogDebug("Loading documents for user ID: {UserId}", UserId);
                     Documents = await _documentsService.GetDocuments(UserId);
                     CallFailed = false;
-                    _logger.LogDebug("Loaded documents: {DocumentCount}; user ID: {UserId}", Documents.Count(), UserId);
+                    _logger.LogInformation("Loaded documents: {DocumentCount}; user ID: {UserId}", Documents.Count(), UserId);
                 }
             }
             catch (Exception ex)
             {
-                _logger.LogError($"API call failed: {ex}");
+                _logger.LogError("API call failed: {Exception}", ex);
                 Documents = null;
                 CallFailed = true;
             }

@@ -1,11 +1,10 @@
 ﻿using Fulfilment.Core.Configuration;
-using Fulfilment.Core.Tracing;
+using Fulfilment.Core.Logging;
 using Fulfilment.Web.Model;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -15,6 +14,7 @@ namespace Fulfilment.Web.Services
     public class AuthorizationService
     {
         private readonly ILogger _logger;
+        private readonly SetupLogger _setupLogger;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
         private readonly ActivitySource _activitySource;
@@ -23,14 +23,24 @@ namespace Fulfilment.Web.Services
 
         private readonly string _authzUrl;
 
-        public AuthorizationService(IHttpClientFactory clientFactory, IConfiguration config, ActivitySource activitySource, ObservabilityOptions options, ILogger<AuthorizationService> logger)
+        public AuthorizationService(IHttpClientFactory clientFactory, IConfiguration config, ActivitySource activitySource, ObservabilityOptions options, ILogger<AuthorizationService> logger, SetupLogger setupLogger)
         {
             _clientFactory = clientFactory;
             _config = config;
             _activitySource = activitySource;
             _options = options;
             _logger = logger;
+            _setupLogger = setupLogger;
             _authzUrl = _config["Documents:Authz:Url"];
+
+            if (string.IsNullOrEmpty(_authzUrl))
+            {
+                _setupLogger.LogWarning("authz-url", "No authorization service URL set - authorization will be skipped");
+            }
+            else
+            {
+                _setupLogger.LogInformation("authz-url", $"Using authorization service at: {_authzUrl}");
+            }
         }
 
         public async Task<AuthorizationResult> Check(string userId, DocumentAction action)
@@ -39,11 +49,11 @@ namespace Fulfilment.Web.Services
             {
                 IsAllowed = true
             };
-
+            
             if (string.IsNullOrEmpty(_authzUrl))
             {
                 return authzResult;
-            }
+            }            
 
             Activity authzSpan = null;
             if (_options.Trace.CustomSpans)

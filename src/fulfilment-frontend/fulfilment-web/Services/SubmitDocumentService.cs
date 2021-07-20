@@ -1,8 +1,11 @@
 ﻿using Fulfilment.Core.Configuration;
+using Fulfilment.Core.Logging;
 using Fulfilment.Core.Tracing;
 using Fulfilment.Web.Model;
 using Fulfilment.Web.Models;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
+using Prometheus;
 using System;
 using System.Diagnostics;
 using System.Net.Http;
@@ -14,6 +17,10 @@ namespace Fulfilment.Web.Services
 {
     public class SubmitDocumentService
     {
+        private static readonly Histogram _ApiHistogram = Metrics.CreateHistogram("web_document_call_seconds", "Document API call duration", "action");
+
+        private readonly ILogger _logger;
+        private readonly SetupLogger _setupLogger;
         private readonly AuthorizationService _authzService;
         private readonly IHttpClientFactory _clientFactory;
         private readonly IConfiguration _config;
@@ -23,8 +30,10 @@ namespace Fulfilment.Web.Services
 
         public string ApiUrl { get; private set; }
 
-        public SubmitDocumentService(AuthorizationService authzService, IHttpClientFactory clientFactory, IConfiguration config, ActivitySource activitySource, ObservabilityOptions options)
+        public SubmitDocumentService(AuthorizationService authzService, IHttpClientFactory clientFactory, IConfiguration config, ActivitySource activitySource, ObservabilityOptions options, ILogger<SubmitDocumentService> logger, SetupLogger setupLogger)
         {
+            _logger = logger;
+            _setupLogger = setupLogger;
             _authzService = authzService;
             _clientFactory = clientFactory;
             _config = config;
@@ -32,6 +41,7 @@ namespace Fulfilment.Web.Services
             _options = options;
 
             ApiUrl = $"{_config["Documents:Api:BaseUrl"]}/document";
+            _setupLogger.LogInformation("doc-submit-url", $"Using submit document service at: {ApiUrl}");
         }
 
         public async Task<Document> SubmitDocument(string userId, string filename)
@@ -49,6 +59,12 @@ namespace Fulfilment.Web.Services
                 apiSpan.AddTag("span.kind", "internal")
                        .AddTag("user.id", userId)
                        .AddTag("action.type", $"{DocumentAction.Submit}");
+            }
+
+            ITimer timer = null;
+            if (_options.Metrics.Enabled)
+            {
+                timer = _ApiHistogram.WithLabels($"{DocumentAction.Submit}").NewTimer();
             }
 
             try
@@ -80,6 +96,10 @@ namespace Fulfilment.Web.Services
                 if (apiSpan != null)
                 {
                     apiSpan.Dispose();
+                }
+                if (timer != null)
+                {
+                    timer.Dispose();
                 }
             }
         }

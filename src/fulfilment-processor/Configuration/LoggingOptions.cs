@@ -7,6 +7,10 @@
         public bool File { get; set; } = false;
 
         public bool Structured { get; set; } = true;
+
+        public bool UseInfoForDurations { get; set; } = false;
+
+        public string LogFilePath { get; set; } = "logs/fulfilment-processor.json";
     }
 }
 

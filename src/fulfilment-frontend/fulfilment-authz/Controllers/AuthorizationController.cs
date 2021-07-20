@@ -1,7 +1,10 @@
 ﻿using Fulfilment.Authorization.Model;
+using Fulfilment.Core.Configuration;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Prometheus;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -12,14 +15,19 @@ namespace Fulfilment.Authorization.Controllers
     [ApiController]
     public class AuthorizationController : ControllerBase
     {
+        private static readonly Counter _CheckCounter = Metrics.CreateCounter("authorization_checks_total", "Fulfilment authorization checks", "action", "result");
+        private static readonly Histogram _IdpHistogram = Metrics.CreateHistogram("authorization_idp_call_seconds", "Fulfilment Identity Provider call duration", "idp_url");
+
         private readonly IHttpClientFactory _clientFactory;
+        private readonly MetricsOptions _metricsOptions;
         private readonly IConfiguration _config;
         private readonly ILogger _logger;
         private readonly string _idpUrl;
 
-        public AuthorizationController(IHttpClientFactory clientFactory, IConfiguration config, ILogger<AuthorizationController> logger)
+        public AuthorizationController(IHttpClientFactory clientFactory, IOptions<ObservabilityOptions> options, IConfiguration config, ILogger<AuthorizationController> logger)
         {
             _clientFactory = clientFactory;
+            _metricsOptions = options.Value.Metrics;
             _config = config;
             _logger = logger;
             _idpUrl = _config["IdentityProvider:Url"];
@@ -34,7 +42,9 @@ namespace Fulfilment.Authorization.Controllers
                 Action = documentAction,
                 IsAllowed = true
             };
-            
+                
+            _logger.LogDebug("Auth check request for user ID: {UserId}; action: {DocumentAction}", userId, documentAction);
+
             if (Activity.Current != null)
             {
                 if (Activity.Current.Baggage.Any(x => x.Key == "authz.skip"))
@@ -51,14 +61,36 @@ namespace Fulfilment.Authorization.Controllers
             //not a real idp call - just used to create another span in the trace:
             if (_idpUrl != string.Empty)
             {
-                _logger.LogDebug("Making identity provider call, URL: {IdpUrl}", _idpUrl);
-                var client = _clientFactory.CreateClient();
-                await client.GetAsync(_idpUrl);
+                ITimer timer = null;
+                if (_metricsOptions.Enabled)
+                {
+                    timer = _IdpHistogram.WithLabels(_idpUrl).NewTimer();
+                }
+                try
+                {
+                    _logger.LogTrace("Making identity provider call, URL: {IdpUrl}", _idpUrl);
+                    var client = _clientFactory.CreateClient();
+                    await client.GetAsync(_idpUrl);
+                }
+                finally
+                {
+                    if (timer != null)
+                    {
+                        timer.Dispose();
+                    }
+                }
             }
-
+                         
             result.IsAllowed = (documentAction == DocumentAction.List && userId.StartsWith("0")) ||
                                (documentAction == DocumentAction.Submit && userId.StartsWith("04")) ||
                                (documentAction == DocumentAction.Delete && userId.StartsWith("041"));
+
+            _logger.LogInformation("Auth check result: {IsAuthorized}; user ID: {UserId}; action: {DocumentAction}", result.IsAllowed, userId, documentAction);
+
+            if (_metricsOptions.Enabled)
+            {
+                _CheckCounter.WithLabels($"{documentAction}", $"{result.IsAllowed}").Inc();
+            }
 
             return Ok(result);
         }
