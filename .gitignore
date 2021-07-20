@@ -1,5 +1,6 @@
 # nested data folders:
 labs/**/data
+hackathon/data
 !labs/elasticsearch/data
 
 ## Ignore Visual Studio temporary files, build results, and

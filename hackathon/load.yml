@@ -1,0 +1,33 @@
+services:
+
+  fortio-list:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 9 -t 60s http://fulfilment-web/index?userId=0421
+    restart: always
+    networks:
+      - fulfilment
+
+  fortio-submit-pdf:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 3 -t 60s http://fulfilment-web/submit?userId=0421&filename=adobe.pdf
+    restart: always
+    networks:
+      - fulfilment
+
+  fortio-submit-docx:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 5 -t 60s http://fulfilment-web/submit?userId=0422&filename=word.docx
+    restart: always
+    networks:
+      - fulfilment
+
+  fortio-submit-doc:
+    image: fortio/fortio:1.6.8
+    command: load -c 32 -qps 20 -t 60s http://fulfilment-web/submit?userId=0432&filename=word.doc
+    restart: always
+    networks:
+      - fulfilment
+
+networks:
+  fulfilment:
+    name: obsfun-fulfilment

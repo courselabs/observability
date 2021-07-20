@@ -1,0 +1,26 @@
+﻿{
+  "Observability": {
+    "Logging": {
+      "File": true,
+      "Console": false,
+      "Structured": true,
+      "UseInfoForDurations" : true
+    },
+    "Trace" : {
+      "Console" : false,
+      "CustomSpans" : true
+    },
+    "Metrics" : {
+      "IncludeRuntime" : true
+    }
+  },
+  "Serilog": {
+    "MinimumLevel": {
+      "Default": "Information",
+      "Override": {
+          "Microsoft": "Warning",
+          "System": "Error"
+      }
+    }
+  }
+}

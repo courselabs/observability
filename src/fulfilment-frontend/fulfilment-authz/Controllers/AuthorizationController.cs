@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Prometheus;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
@@ -59,18 +60,35 @@ namespace Fulfilment.Authorization.Controllers
             }
 
             //not a real idp call - just used to create another span in the trace:
-            if (_idpUrl != string.Empty)
+            var url = _idpUrl;
+            var experimentalIdp = (userId == "0479");
+            if (experimentalIdp)
             {
+                url = "https://identity.sixeyed.com/authn";
+                _logger.LogInformation("Using experimental identity provider for configured user. IDP: {IdpUrl}; user ID: {UserId}", url, userId);
+            }
+
+            if (url != string.Empty)
+            {
+
                 ITimer timer = null;
                 if (_metricsOptions.Enabled)
                 {
-                    timer = _IdpHistogram.WithLabels(_idpUrl).NewTimer();
+                    timer = _IdpHistogram.WithLabels(url).NewTimer();
                 }
                 try
-                {
-                    _logger.LogTrace("Making identity provider call, URL: {IdpUrl}", _idpUrl);
+                {                    
+                    _logger.LogTrace("Making identity provider call, URL: {IdpUrl}", url);
+                    if (experimentalIdp)
+                    {
+                        await Task.Delay(25 * 1000);
+                    }
                     var client = _clientFactory.CreateClient();
-                    await client.GetAsync(_idpUrl);
+                    await client.GetAsync(url);
+                }
+                catch
+                {
+                    _logger.LogWarning("Identity provider call failed! Defaulting to: {IsAuthorized}. IDP: {IdpUrl}; user ID: {UserId}", result.IsAllowed, url, userId);
                 }
                 finally
                 {

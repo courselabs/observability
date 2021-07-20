@@ -22,6 +22,7 @@ ENV Observability__Trace__Console="true" \
     Observability__Trace__Baggage__Tag="false" \
     Observability__Trace__Baggage__Log="false" \
     Documents__Api__BaseUrl="http://fulfilment-api" \
-    Documents__Authz__Url=""
+    Documents__Authz__Url="" \
+    Documents__Prerender="false"
 
 COPY --from=builder /out/ .

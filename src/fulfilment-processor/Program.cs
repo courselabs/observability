@@ -41,8 +41,8 @@ namespace Fulfilment.Processor
             var options = serviceProvider.GetRequiredService<IOptions<ObservabilityOptions>>().Value;
 
             // configure Serilog
-            var logger = CreateLogger(config, options.Logging);
-            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(logger));
+            Log.Logger = CreateLogger(config, options.Logging);
+            services.AddLogging(loggingBuilder => loggingBuilder.AddSerilog(Log.Logger));
             serviceProvider = services.BuildServiceProvider();
 
             if (options.ExitAfterSeconds > 0)
@@ -53,7 +53,12 @@ namespace Fulfilment.Processor
                     AutoReset = false,
                     Enabled = true
                 };
-                exitTimer.Elapsed += (s, args) => _Cancellation.Cancel();
+                exitTimer.Elapsed += (s, args) =>
+                {
+                    Log.Fatal("{EventType}: Out of memory! Exiting immediately. Goodbye.", "EXIT");
+                    Log.CloseAndFlush();
+                    _Cancellation.Cancel();
+                };
             }
 
             if (options.StartupDelaySeconds > 0)
@@ -73,6 +78,7 @@ namespace Fulfilment.Processor
                 server.Start();
             }
 
+            Log.Information("{EventType}: Processor starting", "STARTUP");
             var processor = serviceProvider.GetRequiredService<DocumentProcessor>();
             processor.GenerateRandom(_Cancellation);
         }

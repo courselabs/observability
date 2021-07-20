@@ -1,0 +1,36 @@
+global:
+  scrape_interval: 30s
+
+scrape_configs:       
+  - job_name: 'fulfilment-web'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-web']
+        labels:
+          tier: web
+
+  - job_name: 'fulfilment-authz'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-authz']
+        labels:
+          tier: api
+
+  - job_name: 'fulfilment-processor'
+    metrics_path: /metrics
+    static_configs:
+      - targets: ['fulfilment-processor-1:9110', 'fulfilment-processor-2:9110']
+        labels:
+          tier: backend
+    relabel_configs:
+      - source_labels: [__address__]
+        regex: 'fulfilment-processor-([0-9]).*'
+        target_label: instance_number            
+        replacement:  '$1'
+      
+  - job_name: 'fulfilment-api'
+    metrics_path: /actuator/prometheus
+    static_configs:
+      - targets: ['fulfilment-api']
+        labels:
+          tier: api

@@ -34,6 +34,20 @@ namespace Fulfilment.Web.Pages
             _options = options;
         }
 
+        public async Task<IActionResult> OnGetAsync()
+        {
+            if (Request.Query.ContainsKey("userId") && Request.Query.ContainsKey("filename"))
+            {
+                UserId = Request.Query["userId"];
+                Filename = Request.Query["filename"];
+                return await OnPostAsync();
+            }
+            else
+            {
+                return Page();
+            }
+        }
+
         public async Task<IActionResult> OnPostAsync()
         {
             var requestId = Guid.NewGuid().ToString();
