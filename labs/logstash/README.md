@@ -60,7 +60,10 @@ The Docker setup mounts a local folder into the `/data` path in the Logstash con
 _If you're using Windows, run this script to set up a Linux-style copy command:_
 
 ```
-# ON Windows
+# ON Windows - enable scripts:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+
+# then run:
 . ./scripts/windows-tools.ps1
 ```
 

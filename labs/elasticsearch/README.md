@@ -35,7 +35,10 @@ docker logs obsfun_elasticsearch_1
 We'll use curl to make HTTP requests - if you're using Windows, run this script to use the correct curl version:
 
 ```
-# only for Windows:
+# only for Windows - enable scripts:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+
+# then run:
 . ./scripts/windows-tools.ps1
 ```
 

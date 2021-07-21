@@ -132,6 +132,10 @@ It's a simple HTTP API which you can call with curl.
 _If you're a Windows user run this script to use the correct curl command:_
 
 ```
+# first enable scripts:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+
+# then run:
 . ./scripts/windows-tools.ps1
 ```
 
