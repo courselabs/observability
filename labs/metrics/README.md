@@ -210,7 +210,7 @@ Summaries record two pieces of data for each metric - how often it has happened,
 
 We've looked at counters, gauges and summaries. There's one other metric type - the histogram.
 
-Look at the metrics from the document processor again and you'll see a histogram metric. What is it recording, and how could you use the data?
+Look at the metrics from the document processor at http://localhost:9110/metrics again and you'll see a histogram metric. What is it recording, and how could you use the data?
 
 > Stuck? Try [hints](hints.md) or check the [solution](solution.md).
 
