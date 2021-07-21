@@ -20,7 +20,7 @@ The demo app and the observability stacks are set up for you, and all the metric
 
 The app is the same document processing solution you've used, with multiple components plugging into multiple observability sub-systems:
 
-![](TODO)
+![](../img/hackathon-architecture.png)
 
 ## Setup
 

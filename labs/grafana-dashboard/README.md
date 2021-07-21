@@ -52,7 +52,7 @@ docker-compose -f labs/grafana-dashboard/apps.yml up -d
 
 We're going to build a dashboard for the demo app, focusing on some of the [SRE Golden Signals](https://sre.google/sre-book/monitoring-distributed-systems/). Here's the sketch showing what we're looking for:
 
-> TODO - jamboard sketch
+![](../../img/grafana-dashboard-sketch.png)
 
 Different visualizations work well for different types of data. In these exercises you'll be given the PromQL and some guidance, but you don't need to represent panels exactly as they are here.
 
