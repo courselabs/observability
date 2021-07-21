@@ -32,6 +32,16 @@ Docker Engine is the background service which runs containers. You can install i
  - [Install Docker Engine](https://docs.docker.com/engine/install/)
  - [Install Docker Compose](https://docs.docker.com/compose/install/)
 
+If you have a new install of Docker, make sure the service is running and add yourself to the `docker` group so you don't need to use `sudo` for the Docker CLI:
+
+```
+sudo service docker start
+
+sudo usermod -aG docker $USER
+
+su $USER    # or logout and log back in again
+```
+
 > If you're using WSL on Windows 10, it's much easier to use Docker Desktop which integrates with your WSL distro.
 
 </details><br />
