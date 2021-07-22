@@ -6,6 +6,16 @@ Processing is done with pipelines - you specify the input file(s) to read, any p
 
 Elasticsearch is one of the output destinations, so you can run Logstash to collect all your logs and store them centrally.
 
+## Reference
+
+- [Pipeline input plguins](https://www.elastic.co/guide/en/logstash/7.x/input-plugins.html) - configuration for [file input](https://www.elastic.co/guide/en/logstash/7.x/plugins-inputs-file.html) 
+
+- [Filter plugins](https://www.elastic.co/guide/en/logstash/7.x/filter-plugins.html) - configuration for [CSV](https://www.elastic.co/guide/en/logstash/7.x/plugins-filters-csv.html) and [grok](https://www.elastic.co/guide/en/logstash/7.x/plugins-filters-grok.html) 
+
+- [Output plugins](https://www.elastic.co/guide/en/logstash/7.x/output-plugins.html) - configuration for [console stdout](https://www.elastic.co/guide/en/logstash/7.x/plugins-outputs-stdout.html) and [Elasticsearch](https://www.elastic.co/guide/en/logstash/7.x/plugins-outputs-elasticsearch.html) 
+
+
+
 ## Run Logstash
 
 Logstash is a Java application - we'll run it alongside Elasticsearch, in containers:
@@ -256,8 +266,8 @@ Produces this output:
    "clientip":"83.149.9.216",
    "httpversion":"1.1",
    "response":"200",
-   "agent":"\"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36\"",
-   "referrer":"\"http://semicomplete.com/presentations/logstash-monitorama-2013/\"",
+   "agent":"/"Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36/"",
+   "referrer":"/"http://semicomplete.com/presentations/logstash-monitorama-2013//"",
    "@timestamp":"2021-06-17T10:05:43.000Z"
 }
 ```

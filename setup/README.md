@@ -27,22 +27,29 @@ The download and install takes a few minutes. When it's done, run the _Docker_ a
 <details>
   <summary>Running Docker on Linux</summary>
 
+> If you're using WSL on Windows 10, it's much easier to use Docker Desktop which integrates with your WSL distro.
+
 Docker Engine is the background service which runs containers. You can install it - along with the Docker command line - for lots of different Linux distros:
 
  - [Install Docker Engine](https://docs.docker.com/engine/install/)
  - [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-If you have a new install of Docker, make sure the service is running and add yourself to the `docker` group so you don't need to use `sudo` for the Docker CLI:
+On a new install of Docker, make sure the service is running and add yourself to the `docker` group so you don't need to use `sudo` for the Docker CLI:
 
 ```
-sudo service docker start
+sudo service docker start   # you'll be prompted for your password
 
 sudo usermod -aG docker $USER
 
-su $USER    # or logout and log back in again
+newgrp docker
 ```
 
-> If you're using WSL on Windows 10, it's much easier to use Docker Desktop which integrates with your WSL distro.
+**OPTIONAL** - you can set Docker to automatically start when your machine starts (using `systemd`):
+
+```
+sudo systemctl enable docker.service
+sudo systemctl enable containerd.service
+```
 
 </details><br />
 
@@ -90,6 +97,24 @@ Server: Docker Engine - Community
   OS/Arch:          linux/amd64
 ...
 ```
+
+> Make sure you see two sets of results: `Client:` and `Server:`
+
+<details>
+  <summary>Do this if you get a permission denied error on Linux</summary>
+
+Add your user to the `docker` group:
+
+```
+sudo usermod -aG docker $USER
+
+# logout and log back in again
+
+# OR run: 
+su $USER   
+```
+
+</details><br/>
 
 And then:
 

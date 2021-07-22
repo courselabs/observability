@@ -204,7 +204,7 @@ JSON is much easier (and faster) to parse than a regular expression, and this en
 - name of the machine the wrote the los
 - version of the application
 
-The code that writes these logs is in the [DocumentProcessor class](../../src\fulfilment-processor\DocumentProcessor.cs). It's a C# app but you don't need to be familiar with the language to see how the logs are written.
+The code that writes these logs is in the [DocumentProcessor class](../../src/fulfilment-processor/DocumentProcessor.cs). It's a C# app but you don't need to be familiar with the language to see how the logs are written.
 
 📋 Compare the logging options in the `RecordFailed` method. What is the difference with the structured logs?
 
@@ -228,7 +228,7 @@ At the time of writing the log, all the details are available as separate pieces
 
 </details><br/>
 
-Structure logs keep the key details separate from the log message, so you can extract and store them without complex, unreliable and CPU-intensive regular expression processing.
+Structured logs keep the key details separate from the log message, so you can extract and store them without complex, unreliable and CPU-intensive regular expression processing.
 
 ## Lab
 
