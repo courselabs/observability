@@ -2,6 +2,16 @@
 
 ## Load the data
 
+_If you're using Windows, run this script to set up a Linux-style copy command:_
+
+```
+# ON Windows - enable scripts:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+
+# then run:
+. ./scripts/windows-tools.ps1
+
+```
 Copy the data file into the mounted data folder:
 
 ```
@@ -11,7 +21,7 @@ cp -f data/fulfilment-20210707.csv labs/kibana/data/
 In the Kibana console, list indices:
 
 ```
-GET _cat/indices
+GET _cat/indices?v
 ```
 
 > When the log load has completed you'll see an index called `logstash-2021.07.07` with 86 documents.

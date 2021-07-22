@@ -11,5 +11,4 @@ services:
       - fulfilment
 
 networks: 
-  web:
   fulfilment:

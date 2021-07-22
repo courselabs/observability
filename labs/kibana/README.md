@@ -37,10 +37,12 @@ Kibana uses Elasticsearch to store data, so you can scale out with multiple Kiba
 Query the index list:
 
 ```
+# Ctrl-C to exit the log command
+
 curl localhost:9200/_cat/indices?v
 ```
 
-You'll see a `kibana` index with a single document. Now we're ready to start using Kibana.
+You'll see a `kibana` index with some documents. Now we're ready to start using Kibana.
 
 
 ## Use the Kibana Console
