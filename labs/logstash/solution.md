@@ -3,7 +3,7 @@
 Copy the new Apache file to Logstash in the same way:
 
 ```
-cp -f data/apache_logs-2021-05 labs/logstash/data/
+cp data/apache_logs-2021-05 labs/logstash/data/
 ```
 
 Check the indices:

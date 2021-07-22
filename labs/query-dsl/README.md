@@ -185,7 +185,7 @@ There are other types of match query. In the console hit _Ctrl+Space_ in the `ma
 You can use the `match_phrase` query here:
 
 ```
-GET /fulfilment-logs/_search?pretty&size=1
+GET /fulfilment-log/_search?pretty&size=1
 { 
     "query": 
     { 

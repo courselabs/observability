@@ -67,20 +67,10 @@ This data file has a version of the fulfilment processor logs written in the CSV
 
 The Docker setup mounts a local folder into the `/data` path in the Logstash container. When we copy files locally, they'll appear inside the container.
 
-_If you're using Windows, run this script to set up a Linux-style copy command:_
-
-```
-# ON Windows - enable scripts:
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
-
-# then run:
-. ./scripts/windows-tools.ps1
-```
-
 Now copy the CSV file into the mounted folder for the container:
 
 ```
-cp -f data/fulfilment-20210707.csv labs/logstash/data/
+cp data/fulfilment-20210707.csv labs/logstash/data/
 ```
 
 > Logstash will see the file created and process it
@@ -134,13 +124,13 @@ Logstash has built-in support for Elasticsearch. This pipeline configuration is 
 Overwrite the pipeline configuration the Logstash container is using, to load the Elasticsearch pipeline:
 
 ```
-cp -f labs/logstash/pipeline-config/fulfilment-csv-to-es.yml labs/logstash/config/pipelines.yml
+cp labs/logstash/pipeline-config/fulfilment-csv-to-es.yml labs/logstash/config/pipelines.yml
 ```
 
 Check the logs and you'll see Logstash loading the new configuration:
 
 ```
-docker logs obsfun_logstash_1 
+docker logs obsfun_logstash_1 -n 2
 ```
 
 > The running pipelines log should now state `:running_pipelines=>[:"fulfilment-csv-to-es"]`
@@ -153,7 +143,7 @@ docker logs obsfun_logstash_1
 You can repeat the previous copy command to reload the same CSV file:
 
 ```
-cp -f data/fulfilment-20210707.csv labs/logstash/data/
+cp data/fulfilment-20210707.csv labs/logstash/data/
 ```
 
 Elasticsearch is listening on the standard port:
@@ -204,13 +194,13 @@ There are the same three parts to the pipeline:
 Overwrite the Logstash pipeline configuration to load both the CSV and Apache pipelines:
 
 ```
-cp -f labs/logstash/pipeline-config/all-to-es.yml labs/logstash/config/pipelines.yml
+cp labs/logstash/pipeline-config/all-to-es.yml labs/logstash/config/pipelines.yml
 ```
 
-Check the container logs to confirm both pipelines are running:
+Check the most recent container logs to confirm both pipelines are running:
 
 ```
-docker logs obsfun_logstash_1 
+docker logs obsfun_logstash_1 -n 2
 ```
 
 > You should see two pipelines in the logs `:running_pipelines=>[:"fulfilment-csv-to-es", :"apache-to-es"]`
@@ -220,7 +210,7 @@ Now Logstash is watching for Apache log files as well as fulfilment processor CS
 Copy in a small sample of logs to the Logstash data directory:
 
 ```
-cp -f data/apache_logs-small labs/logstash/data/
+cp data/apache_logs-small labs/logstash/data/
 ```
 
 📋 Check the name of the Apache index in Elasticsearch. Query that index to retrieve any document - how is the data formatted?
@@ -283,7 +273,7 @@ Logstash has lots of configuration options for parsing incoming data into struct
 
 Regular Expressions can only get you so far. Sometimes the incoming data doesn't have the format you expect, and then Logstash can't process it.
 
-There's a much bigger Apache log file in `data/apache-logs-2021-05`. Copy that into the Logstash data directory and see what happens with the processing. 
+There's a much bigger Apache log file in `data/apache_logs-2021-05`. Copy that into the Logstash data directory and see what happens with the processing. 
 
 One entry in the 5000-line log file is malformed, can you find the problem?
 

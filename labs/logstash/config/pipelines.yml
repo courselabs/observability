@@ -1,2 +1,2 @@
-- pipeline.id: fulfilement-csv
+- pipeline.id: fulfilment-csv
   path.config: "/pipelines/fulfilment-csv.conf"

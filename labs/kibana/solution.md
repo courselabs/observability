@@ -2,20 +2,10 @@
 
 ## Load the data
 
-_If you're using Windows, run this script to set up a Linux-style copy command:_
-
-```
-# ON Windows - enable scripts:
-Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
-
-# then run:
-. ./scripts/windows-tools.ps1
-
-```
 Copy the data file into the mounted data folder:
 
 ```
-cp -f data/fulfilment-20210707.csv labs/kibana/data/
+cp data/fulfilment-20210707.csv labs/kibana/data/
 ```
 
 In the Kibana console, list indices:
@@ -46,3 +36,31 @@ message: "Request ID:" and message: 3*
 ![](../../img/kibana-lab-solution.png)
 
 The wildcard search finds the additional record with error code starting with 3. This data doesn't have enough structure for precise searches.
+
+## More control with Query DSL
+
+The wildcard search in KQL doesn't let you get to the right answer, but you can build a query in the console which uses a more powerful wildcard search:
+
+```
+GET /logstash-2021.07.07/_search?pretty&size=1
+{
+  "query": {
+    "bool": {
+      "must": {
+        "wildcard": {
+          "message": {
+          "value": "3???????"
+          }
+        }
+      },
+      "filter": {
+        "term": {
+          "level.keyword": "ERROR"
+        }
+      }
+    }
+  }
+}
+```
+
+That will give you the right answer because it matches only a 3 with 7 characters following it, so the 305 isn't a match. We'll do more Query DSL later, but this is still no match for properly structured data.
