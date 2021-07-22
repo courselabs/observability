@@ -6,7 +6,7 @@ You can use Elasticsearch as a generic data store, but it's particularly well su
 
 ## Reference
 
-- [Index API documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html) - for storing data
+- [Index API](https://www.elastic.co/guide/en/elasticsearch/reference/current/indices.html) and [Document API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) documentation - for storing data
 - [Search API documentation](https://www.elastic.co/guide/en/elasticsearch/reference/current/search-search.html) - for querying data
 - [Query DSL](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl.html) - the data query language
 
@@ -232,7 +232,7 @@ There are lots of search features in Elasticsearch, so the Query DSL is quite co
 
 Time for some practice of the index and search APIs. You've loaded individual documents into an index, but it's much quicker to bulk load them.
 
-Start by bulk indexing all the documents in the file [data/logs.json](../../data/logs.json) (_note the data directory is in the root of the repo folder_).
+Start by bulk indexing all the documents in the file [data/logs.json](../../data/logs.json) (_note the data directory is in the root of the repo folder_) - you'll need to use a different [Document API](https://www.elastic.co/guide/en/elasticsearch/reference/current/docs.html) for that.
 
 Now write some match queries to find:
 

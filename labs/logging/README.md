@@ -21,7 +21,7 @@ Run Apache in a Docker container:
 docker run -it -p 8010:80 httpd:alpine
 ```
 
-> The `-it` flag means you're connecting your terminal to the container, so you'll see log entries printed out.
+> The `-it` flag means you're connecting your terminal to the container, so you'll see log entries printed out; if you see a SIGWINCH log and your container exits, that's a [known issue](https://github.com/docker-library/httpd/issues/9), you can just run the command again.
 
 When it starts the app generates a few log lines like this:
 
