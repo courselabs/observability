@@ -43,8 +43,8 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
 
 ## Part 6 - Real-World Observability
 
-- [Troubleshooting]()
-- [Hackathon!]() 
+- [Troubleshooting](./labs/troubleshooting/README.md)
+- [Hackathon!](./hackathon/README.md) 
 
 
 ### Credits

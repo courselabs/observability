@@ -33,8 +33,7 @@ Fixes:
 ## Troubleshooting Traces
 
 Fixes:
-
-
+    
 1. Documents service spans not being reported
     - the API app is misconfigured - it's using a hostname of `metrics` to send data to Jaeger, the correct hostname is `jaeger`
 

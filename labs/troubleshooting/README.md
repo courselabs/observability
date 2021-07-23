@@ -1,4 +1,4 @@
-# Troubleshooting Apps in Kubernetes
+# Troubleshooting Observability
 
 Observability is all about plugging your applications into collectors - Prometheus for metrics, Logstash for logs and Jeager for traces.
 
