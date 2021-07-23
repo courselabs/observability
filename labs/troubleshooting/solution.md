@@ -17,6 +17,12 @@ Deploy the changes and the app will produce all the expected instrumentation:
 docker-compose -f labs/troubleshooting/solution/metrics.yml -f labs/troubleshooting/solution/logging.yml  -f labs/troubleshooting/solution/apps.yml up -d
 ```
 
+> The load-generator containers will keep making HTTP requests so you'll have lots of data to work with, but if that's making your machine work too hard, you can stop the Fortio containers and make manual website calls instead:
+
+```
+docker-compose -f labs/troubleshooting/load.yml stop
+```
+
 ## Troubleshooting Metrics
 
 Fixes:

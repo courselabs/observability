@@ -86,6 +86,12 @@ You now have all the tools you're familiar with from the course to investigate i
 - Jaeger at http://localhost:16686
 - Kibana at http://localhost:5601
 
+> The load-generator containers will keep making HTTP requests so you'll have lots of data to work with, but if that's making your machine work too hard, you can stop the Fortio containers and make manual website calls instead:
+
+```
+docker-compose -f hackathon/load.yml stop
+```
+
 ## Part 1 - diagnosing slow responses
 
 One of the administration website users has reported slow response times when they try and list documents.

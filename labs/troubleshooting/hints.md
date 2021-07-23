@@ -4,12 +4,6 @@ It's best to approach this one part at a time, and get all the instrumentation f
 
 There aren't any deliberate errors in the applications, so they'll keep running - but they won't be instrumented correctly to start with.
 
-The load-generator containers will keep making HTTP requests so you'll have lots of data to work with, but if it's too much and you'd rather make manual calls then you can stop the Fortio containers:
-
-```
-docker-compose -f labs/troubleshooting/load.yml stop
-```
-
 ## Troubleshooting Metrics
 
 The Prometheus UI is a good place to start. The target list at http://localhost:9090/classic/targets will tell you where Prometheus is collecting metrics from and whether the targets are up.
