@@ -8,7 +8,9 @@ You will be provided with a Windows VM running in Azure to use for the class. Th
 
 ## Connect to your VM
 
-You'll be given the connection details for your Windows VM during the class.
+You'll be given the connection details for your Windows VM during the class - pick a machine from the list:
+
+- [Lab VMs](/lab-vms.html)
 
 You can connect to the VM using Remote Desktop on Windows, [Microsoft Remote Desktop](https://itunes.apple.com/us/app/microsoft-remote-desktop-8-0/id715768417) from the Mac App Store or [Remmina](https://github.com/FreeRDP/Remmina/wiki#for-end-users) on Linux.
 
