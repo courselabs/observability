@@ -15,13 +15,15 @@ You'll have control over your own application logs, and you'll also use third-pa
 
 The Apache web server produces appliction logs and access logs, recording every page visit, with request and response details.
 
-Run Apache in a Docker container:
+Run Apache in a Docker container and show the logs:
 
 ```
-docker run -it -p 8010:80 httpd:alpine
+docker run -d -p 8010:80 --name apache httpd:alpine
+
+docker logs -f apache
 ```
 
-> The `-it` flag means you're connecting your terminal to the container, so you'll see log entries printed out; if you see a SIGWINCH log and your container exits, that's a [known issue](https://github.com/docker-library/httpd/issues/9), you can just run the command again.
+> The `-f` flag means you're following the logs, so every time Apache writes a new log entry, you'll see it in your terminal
 
 When it starts the app generates a few log lines like this:
 
@@ -73,8 +75,12 @@ Logs also include the source IP address. In a denial-of-service attack you could
 Run a different web server to see how the logs compare:
 
 ```
-# Ctrl-C to exit Apache
+# Ctrl-C to exit the logs command
 
+# remove Apache:
+docker rm -f apache
+
+# run Nginx:
 docker run -it -p 8010:80 nginx:alpine
 ```
 
