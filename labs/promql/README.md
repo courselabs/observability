@@ -145,7 +145,7 @@ This produces a range vector:
 fulfilment_in_flight_total[5m]
 ```
 
-You can't use `max` because that picks the top result from an instant vector - this will error:
+You can't use `max` because that picks the top result from an instant vector - **this will error**:
 
 ```
 max without(job, instance) (fulfilment_in_flight_total[5m])
