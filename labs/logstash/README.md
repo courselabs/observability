@@ -8,7 +8,7 @@ Elasticsearch is one of the output destinations, so you can run Logstash to coll
 
 ## Reference
 
-- [Pipeline input plguins](https://www.elastic.co/guide/en/logstash/7.x/input-plugins.html) - configuration for [file input](https://www.elastic.co/guide/en/logstash/7.x/plugins-inputs-file.html) 
+- [Pipeline input plugins](https://www.elastic.co/guide/en/logstash/7.x/input-plugins.html) - configuration for [file input](https://www.elastic.co/guide/en/logstash/7.x/plugins-inputs-file.html) 
 
 - [Filter plugins](https://www.elastic.co/guide/en/logstash/7.x/filter-plugins.html) - configuration for [CSV](https://www.elastic.co/guide/en/logstash/7.x/plugins-filters-csv.html) and [grok](https://www.elastic.co/guide/en/logstash/7.x/plugins-filters-grok.html) 
 

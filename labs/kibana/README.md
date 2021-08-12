@@ -212,7 +212,11 @@ You can easily build up a query to find documents of a certain type, within a ce
 
 Now we'll use Kibana for some real searching. 
 
-Logstash is running with a pipeline to watch for CSV files and send parsed logs to Elasticsearch. Copy the `data/fulfilment-20210707.csv` file to the Logstash data directory to load it into an index.
+Logstash is running with a pipeline to watch for CSV files and send parsed logs to Elasticsearch. Copy the `data/fulfilment-20210707.csv` file to the Logstash data directory to load it into an index:
+
+```
+cp data/fulfilment-20210707.csv labs/kibana/data/
+```
 
 Then add an index pattern in Kibana to query the new data, and use the _Discover_ tab to find out how many error logs were for request IDs greater than 30,000,000.
 
