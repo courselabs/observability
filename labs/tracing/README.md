@@ -196,13 +196,25 @@ If you look at the final log entry for the web application you'll see that it ha
 
 3. the API logs a span. There's not much detail in the logs, but this is also a server span, it will use the ID from span #2 as its parent, and preserve the trace ID from #1 in its own span ID.
 
-At the simplest level, distributed tracing is about your components logging details of all the HTTP calls they make and receive - the _spans_. Components use an ID in the HTTP header to identify when calls belong to the same transaction - the _trace_.
+At the simplest level, distributed tracing is about your components recording details of all the HTTP calls they make and receive - the _spans_. Components use an ID in the HTTP header to identify when calls belong to the same transaction - the _trace_.
 
 ## Lab
 
 The web application supports OpenTelemetry, so if it gets called by another component using OpenTelemetry then it should propagate the trace ID it receives from that call, instead of generating its own.
 
-You can use curl to call the web app outside of the browser:
+You can use curl to call the web app outside of the browser.
+
+_If you're a Windows user run this script to use the correct curl command:_
+
+```
+# first enable scripts:
+Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
+
+# then run:
+. ./scripts/windows-tools.ps1
+```
+
+Then call the site:
 
 ```
 curl localhost:8070/index?all

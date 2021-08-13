@@ -31,7 +31,7 @@ Delete the index using the Console - this just removes the Kibana data (for inde
 DELETE /.kibana_1
 ```
 
-> This is a useful way to reset Kibana in a dev environment as you're working on visualizations, but use it carefullt. You don't get any confirmation asking you if you're sure!
+> This is a useful way to reset Kibana in a dev environment as you're working on visualizations, but use it carefully. You don't get any confirmation asking you if you're sure!
 
 ## Import the dashboard
 
