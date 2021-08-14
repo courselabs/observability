@@ -28,6 +28,12 @@ docker-compose -f labs/troubleshooting/metrics.yml -f labs/troubleshooting/loggi
 
 > Browse to the app at http://localhost:8070 and list the documents for the default user, to check the app is OK
 
+The load-generator containers will keep making HTTP requests so you'll have lots of data to work with, but if that's making your machine work too hard, you can stop them and make manual website calls instead:
+
+```
+docker-compose -f labs/troubleshooting/load.yml stop
+```
+
 Your goal is to get the observability stack working correctly and reporting everything:
 
 - the metrics in Prometheus at http://localhost:9090 should show an `app_info` metric for every component instance:
