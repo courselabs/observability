@@ -126,7 +126,7 @@ The [node exporter](https://github.com/prometheus/node_exporter) publishes stand
 We can see the metrics it publishes by running it in a container. 
 
 ```
-docker run -d -p 9100:9100 --name node courselabs/obsfun-node-exporter
+docker run -d -p 9100:9100 --name node courselabs/node-exporter
 ```
 
 > Browse these metrics at http://localhost:9100/metrics

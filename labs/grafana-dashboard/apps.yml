@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   node-exporter:
-    image: courselabs/obsfun-node-exporter
+    image: courselabs/node-exporter
     networks: 
       - metrics
 
