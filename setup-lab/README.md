@@ -30,7 +30,7 @@ When you're connected you'll see there are icons in the taskbar to run all the a
 
 - PowerShell - if you prefer to have a separate terminal window
 
-  * Be sure to switch to the lab directory: `cd /github/observability-fundamentals`
+  * Be sure to switch to the lab directory, e.g. `cd /github/observability`
 
 - Docker Desktop - we'll run all the demo apps in containers
 

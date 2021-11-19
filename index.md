@@ -7,8 +7,8 @@ These are hands-on resources to help you learn monitoring, logging and tracing.
  - [Set up Docker and a Git client](setup/README.md) 
  - Download your repo
     - Open a terminal (PowerShell on Windows; any shell on Linux/macOS) 
-    - Run: `git clone https://github.com/courselabs/observability-fundamentals.git --depth 1`
-    - Open the folder: `cd observability-fundamentals`
+    - Run: `git clone https://github.com/courselabs/observability.git`
+    - Open the folder: `cd observability`
 - _Optional_
     -   Install [Visual Studio Code](https://code.visualstudio.com) (free - Windows, macOS and Linux) to browse the repo and documentation
 
