@@ -14,7 +14,7 @@ In a distributed architecture, each of your components exposes an HTTP endpoint,
 Start by running a simple server application. It's a mock document processor, and it records metrics about the work it's doing:
 
 ```
-docker run -d -p 9110:9110 --name processor courselabs/obsfun-fulfilment-processor
+docker run -d -p 9110:9110 --name processor courselabs/fulfilment-processor
 ```
 
 > Browse to the metrics endpoint at http://localhost:9110/metrics
@@ -89,7 +89,7 @@ Remove the processor container and start a new one, configured to expose platfor
 ```
 docker rm -f processor
 
-docker run -d -p 9110:9110 --name processor -e Observability__Metrics__IncludeRuntime=true courselabs/obsfun-fulfilment-processor
+docker run -d -p 9110:9110 --name processor -e Observability__Metrics__IncludeRuntime=true courselabs/fulfilment-processor
 ```
 
 > Browse to the metrics endpoint again at http://localhost:9110/metrics
@@ -163,7 +163,7 @@ Application servers like Tomcat and ASP.NET should publish usage metrics, like t
 Run a Java REST API which uses Tomcat and the [micrometer client library](https://micrometer.io):
 
 ```
-docker run -d -p 8080:80 courselabs/obsfun-fulfilment-api
+docker run -d -p 8080:80 courselabs/fulfilment-api
 ```
 
 > Browse to the metrics at http://localhost:8080/actuator/prometheus

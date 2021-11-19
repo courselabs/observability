@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   fulfilment-processor:
-    image: courselabs/obsfun-fulfilment-processor
+    image: courselabs/fulfilment-processor
     environment:
       - Observability__Logging__Structured=false
       - Observability__Logging__File=true

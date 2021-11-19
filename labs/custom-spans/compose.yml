@@ -10,7 +10,7 @@ services:
       - tracing  
 
   fulfilment-api:
-    image: courselabs/obsfun-fulfilment-api
+    image: courselabs/fulfilment-api
     ports:
       - "8071:80"
     environment:
@@ -21,7 +21,7 @@ services:
       - fulfilment 
 
   fulfilment-authz:
-    image: courselabs/obsfun-fulfilment-authz
+    image: courselabs/fulfilment-authz
     ports:
       - "8072:80"
     environment:
@@ -32,7 +32,7 @@ services:
       - fulfilment 
 
   fulfilment-web:
-    image: courselabs/obsfun-fulfilment-web
+    image: courselabs/fulfilment-web
     ports:
       - "8070:80"
     environment:

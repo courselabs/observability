@@ -8,7 +8,7 @@ services:
       - metrics
 
   fulfilment-api:
-    image: courselabs/obsfun-fulfilment-api
+    image: courselabs/fulfilment-api
     ports:
       - 8080:80
     networks: 
@@ -16,7 +16,7 @@ services:
       - metrics
 
   fulfilment-processor:
-    image: courselabs/obsfun-fulfilment-processor
+    image: courselabs/fulfilment-processor
     environment:
       - Observability__Metrics__IncludeRuntime=true
     networks: 

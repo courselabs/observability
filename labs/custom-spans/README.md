@@ -65,7 +65,7 @@ apiSpan.AddTag("span.kind", "internal")
 
 When the span is created the API call happens inside a try block, and the span is closed in a finally block - ensuring the span is recorded even if there's a processing error.
 
-In Java a new span is created from a `Tracer` object - you'll see this in the `get` method of the [DocumentsController class](../../src/fulfilment-api/src/main/java/com/obsfun/controllers/DocumentsController.java):
+In Java a new span is created from a `Tracer` object - you'll see this in the `get` method of the [DocumentsController class](https://github.com/courselabs/fulfilment/blob/main/src/fulfilment-api/src/main/java/com/obsfun/controllers/DocumentsController.java#L95):
 
 ```
 dbLoadSpan = tracer.buildSpan("database-load").start();

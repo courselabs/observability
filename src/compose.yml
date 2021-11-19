@@ -2,28 +2,6 @@ version: '3.7'
 
 services:
 
-  fulfilment-processor:
-    image: courselabs/obsfun-fulfilment-processor
-    build:
-      context: ./fulfilment-processor
-
-  fulfilment-web:
-    image: courselabs/obsfun-fulfilment-web
-    build:
-      context: ./fulfilment-frontend
-      dockerfile: fulfilment-web/Dockerfile
-
-  fulfilment-api:
-    image: courselabs/obsfun-fulfilment-api
-    build:
-      context: ./fulfilment-api
-
-  fulfilment-authz:
-    image: courselabs/obsfun-fulfilment-authz
-    build:
-      context: ./fulfilment-frontend
-      dockerfile: fulfilment-authz/Dockerfile
-
   node-exporter:
     image: courselabs/obsfun-node-exporter
     build:

@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   fulfilment-web:
-    image: courselabs/obsfun-fulfilment-web
+    image: courselabs/fulfilment-web
     ports:
       - "8070:80"
     networks:

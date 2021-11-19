@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   fulfilment-api:
-    image: courselabs/obsfun-fulfilment-api
+    image: courselabs/fulfilment-api
     environment:
       - OPENTRACING_JAEGER_ENABLED=true
       - TRACE_CUSTOM_SPANS=true
@@ -14,7 +14,7 @@ services:
       - fulfilment 
 
   fulfilment-authz:
-    image: courselabs/obsfun-fulfilment-authz
+    image: courselabs/fulfilment-authz
     environment:
       - Observability__Logging__LogFilePath=logs/fulfilment-authz.json
       - Observability__Metrics__Enabled=true
@@ -28,7 +28,7 @@ services:
       - fulfilment 
 
   fulfilment-web:
-    image: courselabs/obsfun-fulfilment-web
+    image: courselabs/fulfilment-web
     ports:
       - "8080:80"
     environment:
@@ -50,7 +50,7 @@ services:
       - fulfilment 
 
   fulfilment-processor-1:
-    image: courselabs/obsfun-fulfilment-processor
+    image: courselabs/fulfilment-processor
     environment:
       - Observability__Logging__LogFilePath=logs/fulfilment-processor-1.json
       - Observability__StartupDelaySeconds=20
@@ -64,7 +64,7 @@ services:
       - metrics
 
   fulfilment-processor-2:
-    image: courselabs/obsfun-fulfilment-processor
+    image: courselabs/fulfilment-processor
     environment:
       - Observability__Logging__LogFilePath=logs/fulfilment-processor-2.json
       - Observability__Metrics__Factor=1.5
