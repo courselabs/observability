@@ -3,7 +3,7 @@ version: '3.7'
 services:
 
   node-exporter:
-    image: courselabs/node-exporter
+    image: courselabs/node-exporter:latest
     build:
       context: ./node-exporter
 
