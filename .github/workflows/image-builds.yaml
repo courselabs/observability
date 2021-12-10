@@ -23,5 +23,5 @@ jobs:
       - name: Docker build
         working-directory: src
         run: |
-          docker-compose -f compose.yml -f amd64.yaml build 
-          docker-compose -f compose.yml -f amd64.yaml push
+          docker-compose -f compose.yml -f amd64.yml build 
+          docker-compose -f compose.yml -f amd64.yml push
