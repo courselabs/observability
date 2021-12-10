@@ -4,7 +4,7 @@ services:
 
   
   node-exporter:
-    image: courselabs/node-exporter-linux-arm64
+    image: courselabs/node-exporter:latest-linux-arm64
 
   prometheus:
     image: courselabs/prometheus:v2.28.1-linux-arm64
